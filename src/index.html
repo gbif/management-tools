@@ -1,0 +1,26 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>FountainJS</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="http://gbif.org/favicon.ico"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body aria-label="GBIF management tools" layout="column" flex>
+
+<header-component></header-component>
+
+<div layout="row" flex>
+  <nav-component layout="row"></nav-component>
+  <div class="managementApp" layout="column" role="main" flex>
+    <ui-view></ui-view>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<md-sidenav
+        class="md-sidenav-left gb-nav"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')"
+        md-whiteframe="2"
+        >
+
+    <md-content flex="" role="navigation" class="_md flex">
+        <md-list>
+            <md-subheader class="md-no-sticky">Crawl tools</md-subheader>
+            <md-list-item
+                class="menuItem"
+                ng-click="$ctrl.changeState(menuOption.state)"
+                ng-repeat="menuOption in $ctrl.menuOptions"
+                ng-class="{isActive: $ctrl.$state.is(menuOption.state)}">
+                <p>{{ menuOption.name }}</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+
+</md-sidenav>
