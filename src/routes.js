@@ -13,5 +13,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('crawlHistory', {
       url: '/crawl-history?uuid',
       component: 'crawlHistory'
+    })
+    .state('iptSyncState', {
+      url: '/ipt-sync-state?url',
+      component: 'iptSyncState'
     });
 }

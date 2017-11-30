@@ -1,0 +1,44 @@
+{
+  "registeredResources": [
+    {
+      "dwca": "http://labs.gbif.org:7007/archive.do?r=zeigerwerte",
+      "eml": "http://labs.gbif.org:7007/eml.do?r=zeigerwerte",
+      "gbifKey": "3735e976-96aa-41c7-bd64-5b0479a0ac55",
+      "lastPublished": "2017-10-05",
+      "records": 4696,
+      "recordsByExtension": {
+        "http://rs.gbif.org/terms/1.0/Ellenberg": 4696,
+        "http://rs.tdwg.org/dwc/terms/Taxon": 4696
+      },
+      "title": "Zeigerwerte von Pflanzen & Flechten in Mitteleuropa",
+      "type": "CHECKLIST",
+      "version": 1
+    },
+    {
+      "dwca": "http://labs.gbif.org:7007/archive.do?r=tim",
+      "eml": "http://labs.gbif.org:7007/eml.do?r=tim",
+      "gbifKey": "8ec65181-3d7f-44a0-a078-0defb8c2f88a",
+      "lastPublished": "2017-10-10",
+      "records": 44,
+      "recordsByExtension": {
+        "http://rs.tdwg.org/dwc/terms/Occurrence": 44
+      },
+      "title": "tim",
+      "type": "OCCURRENCE",
+      "version": 1.1
+    },
+    {
+      "dwca": "http://labs.gbif.org:7007/archive.do?r=fische",
+      "eml": "http://labs.gbif.org:7007/eml.do?r=fische",
+      "gbifKey": "9c80ea63-3666-491b-a893-b35b4fac4089",
+      "lastPublished": "2017-10-05",
+      "records": 105,
+      "recordsByExtension": {
+        "http://rs.tdwg.org/dwc/terms/Occurrence": 105
+      },
+      "title": "Fish Fauna of Berlin",
+      "type": "OCCURRENCE",
+      "version": 1
+    }
+  ]
+}

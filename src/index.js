@@ -4,6 +4,7 @@ require('angular-material/angular-material.css');
 var todos = require('./app/todos/todos');
 var App = require('./app/containers/App');
 var CrawlHistory = require('./app/containers/crawlHistory/CrawlHistory');
+var IptSyncState = require('./app/containers/iptSyncState/iptSyncState');
 var Header = require('./app/components/Header');
 var Nav = require('./app/components/Nav');
 var MainSection = require('./app/components/MainSection');
@@ -24,6 +25,7 @@ angular
   .service('todoService', todos.TodoService)
   .component('app', App)
   .component('crawlHistory', CrawlHistory)
+  .component('iptSyncState', IptSyncState)
   .component('headerComponent', Header)
   .component('navComponent', Nav)
   .component('footerComponent', Footer)

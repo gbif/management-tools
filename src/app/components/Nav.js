@@ -12,7 +12,7 @@ function Nav($state, $log) {
   this.menuOptions = [
     {name: 'Crawl History', state: 'crawlHistory'},
     {name: 'Overcrawl monitor'},
-    {name: 'IPT sync state'},
+    {name: 'IPT sync state', state: 'iptSyncState'},
     {name: 'Current crawls'}
   ];
 }

@@ -30,6 +30,7 @@
     "angular-sanitize": "^1.6.7",
     "angular-smart-table": "^2.1.9",
     "angular-ui-router": "1.0.0-beta.3",
+    "async": "^2.6.0",
     "babel-core": "^6.26.0",
     "lodash": "^4.17.4",
     "markdown-loader": "^2.0.1",
