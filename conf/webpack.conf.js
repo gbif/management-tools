@@ -6,6 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FailPlugin = require('webpack-fail-plugin');
 const autoprefixer = require('autoprefixer');
 
+const marked = require('marked');
+const renderer = new marked.Renderer();
+
 module.exports = {
   module: {
     loaders: [
@@ -41,6 +44,21 @@ module.exports = {
         test: /\.html$/,
         loaders: [
           'html-loader'
+        ]
+      },
+      {
+        test: /\.md$/,
+        loaders: [
+          {
+            loader: 'html-loader'
+          },
+          {
+            loader: 'markdown-loader',
+            options: {
+              pedantic: true,
+              renderer
+            }
+          }
         ]
       }
     ]

@@ -5,22 +5,22 @@ body {
   background: #f2f2f2;
 }
 
-.managementApp{
+.managementApp {
   flex-grow: 1;
   height: inherit;
   overflow: auto;
   position: relative;
 }
 
-.gb-nav, .gb-nav md-content, .gb-nav .md-toolbar-tools {
+.gb-nav, .gb-nav md-content {
   background-color: #fafafa;
   overflow: hidden;
 }
 
 header-component {
   z-index: 200;
-  background: orange;
-  color: white;
+//background: orange;
+//color: white;
 }
 
 nav-component {
@@ -57,9 +57,32 @@ nav-component {
 .text-red {
   color: tomato;
 }
+
 .badge-red {
   background: tomato;
   color: white;
   padding: 3px 5px;
   border-radius: 3px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.navLogo {
+  border-bottom: 1px solid #ddd;
+  img {
+    width: 100px;
+    margin: auto;
+    display: block;
+    padding: 0 30px;
+  }
 }

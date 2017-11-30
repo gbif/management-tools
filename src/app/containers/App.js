@@ -1,5 +1,4 @@
-var todoFilters = require('../constants/TodoFilters');
-var todos = require('../todos/todos');
+var welcome = require('./welcome.md');
 
 module.exports = {
   template: require('./App.html'),
@@ -7,6 +6,6 @@ module.exports = {
 };
 
 function App() {
-  this.todos = [todos.initialTodo];
-  this.filter = todoFilters.SHOW_ALL;
+  var vm = this;
+  vm.welcome = welcome;
 }

@@ -27,11 +27,13 @@
     "angular-material": "^1.1.5",
     "angular-messages": "^1.6.7",
     "angular-moment": "^1.1.0",
+    "angular-sanitize": "^1.6.7",
     "angular-smart-table": "^2.1.9",
     "angular-ui-router": "1.0.0-beta.3",
     "babel-core": "^6.26.0",
+    "markdown-loader": "^2.0.1",
+    "marked": "^0.3.6",
     "moment": "^2.19.2",
-    "todomvc-app-css": "^2.0.6",
     "webpack": "^2.7.0"
   },
   "devDependencies": {

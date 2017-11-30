@@ -2,7 +2,6 @@ module.exports = {
   template: require('./Nav.html'),
   controller: Nav,
   bindings: {
-    todos: '='
   }
 };
 
@@ -20,7 +19,6 @@ function Nav($state, $log) {
 
 Nav.prototype = {
   changeState: function (state) {
-    this.$log.log(state);
     this.$state.go(state);
   }
 };

@@ -13,12 +13,13 @@ var Footer = require('./app/components/Footer');
 require('angular-ui-router');
 require('angular-material');
 require('angular-moment');
+require('angular-sanitize');
 var routesConfig = require('./routes');
 
 import './index.styl';
 
 angular
-  .module('app', ['ui.router', 'ngMaterial', 'angularMoment'])
+  .module('app', ['ui.router', 'ngMaterial', 'angularMoment', 'ngSanitize'])
   .config(routesConfig)
   .service('todoService', todos.TodoService)
   .component('app', App)
@@ -34,6 +35,6 @@ angular
   .module('app')
   .config(function ($mdThemingProvider) {
     $mdThemingProvider.theme('default')
-      .primaryPalette('orange')
-      .accentPalette('pink');
+      .primaryPalette('green')
+      .accentPalette('deep-orange');
   });

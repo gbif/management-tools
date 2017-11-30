@@ -1,20 +1,17 @@
 module.exports = {
   template: require('./Header.html'),
   controller: Header,
-  bindings: {
-    todos: '='
-  }
+  bindings: {}
 };
 
 /** @ngInject */
-function Header(todoService) {
-  this.todoService = todoService;
-}
+function Header($log, $mdMedia, $mdSidenav) {
+  this.mdMedia = function (size) {
+    return $mdMedia(size);
+  };
 
-Header.prototype = {
-  handleSave: function (text) {
-    if (text.length !== 0) {
-      this.todos = this.todoService.addTodo(text, this.todos);
-    }
-  }
-};
+  this.toggleMenu = function () {
+    $mdSidenav('left_nav')
+      .toggle();
+  };
+}
