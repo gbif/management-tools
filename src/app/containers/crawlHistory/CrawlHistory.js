@@ -1,9 +1,15 @@
 var about = require('./about.md');
+var _ = require('lodash');
 
 module.exports = {
   template: require('./CrawlHistory.html'),
   controller: CrawlHistory
 };
+
+function isGuid(stringToTest) {
+  var regexGuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/gi;
+  return regexGuid.test(stringToTest);
+}
 
 function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
   var vm = this;
@@ -31,6 +37,21 @@ function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
 
   vm.selectedItemChange = function (item) {
     vm.uuid = item.value;
+    vm.getCrawlData();
+  };
+
+  vm.inputChanged = function (item) {
+    if (isGuid(item)) {
+      vm.getCrawlData();
+    }
+  };
+
+  vm.isInSync = function (count) {
+    var results = _.get(vm, 'rowCollection.results', []);
+    var first = _.find(results, function (e) {
+      return e.finishReason === 'NORMAL' && true;
+    });
+    return _.get(first, 'fragmentsReceived', -1) === count;
   };
 }
 
@@ -52,6 +73,12 @@ CrawlHistory.prototype = {
     vm.$http.get('http://api.gbif.org/v1/dataset/' + vm.uuid)
       .then(function (response) {
         vm.dataset = response.data;
+      })
+      .catch(function () {
+      });
+    vm.$http.get('http://api.gbif.org/v1/occurrence/search?limit=0&datasetKey=' + vm.uuid)
+      .then(function (response) {
+        vm.occurrences = response.data;
       })
       .catch(function () {
       });

@@ -29,7 +29,15 @@ angular
   .component('footerComponent', Footer)
   .component('mainSection', MainSection)
   .component('todoTextInput', TodoTextInput)
-  .component('todoItem', TodoItem);
+  .component('todoItem', TodoItem)
+  .filter('localNumber', function () {
+    return function (num, lang) {
+      if (angular.isUndefined(num)) {
+        return '';
+      }
+      return num.toLocaleString(lang);
+    };
+  });
 
 angular
   .module('app')

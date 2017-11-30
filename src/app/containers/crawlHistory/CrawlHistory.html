@@ -39,55 +39,75 @@
             <div layout-gt-xs="row" layout-padding ng-if="!$ctrl.rowCollection">
                 <md-input-container class="md-block" flex-gt-xs>
                     <label>Or enter a dataset UUID</label>
-                    <input ng-model="$ctrl.uuid">
-                </md-input-container>
-                <md-input-container>
-                    <md-button class="md-primary" ng-click="$ctrl.getCrawlData()">Get history</md-button>
+                    <input ng-model="$ctrl.uuid" ng-change="$ctrl.inputChanged($ctrl.uuid)">
                 </md-input-container>
             </div>
-            <md-divider></md-divider>
+
             <md-content class="md-padding white" ng-if="$ctrl.rowCollection">
-                <div layout="row">
-                    <h3 flex>{{ $ctrl.dataset.title}}</h3>
-                    <div>
-                        <md-button class="md-primary" ng-click="$ctrl.clearDataset()">Clear</md-button>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ $ctrl.dataset.title}}</span>
+                        <span class="md-subhead">{{ $ctrl.dataset.key}}</span>
+                        <span class="md-subhead">{{ $ctrl.occurrences.count | localNumber }} occurrences in the GBIF index
+                            <!--<span ng-if="!$ctrl.isInSync($ctrl.occurrences.count)" class="badge-red">Out of sync</span>-->
+                        </span>
+                    </md-card-title-text>
+                </md-card-title>
+                <div layout-wrap layout-gt-sm="row" >
+                    <md-input-container  flex-gt-sm="50">
+                        <md-checkbox ng-model="$ctrl.showAll" aria-label="Show all">
+                            Show details
+                        </md-checkbox>
+                    </md-input-container>
+                    <div flex-gt-sm="50">
+                        <md-card-actions layout="row" layout-align="end center">
+                            <md-button ng-click="$ctrl.clearDataset()">Clear</md-button>
+                            <md-button ng-href="https://gbif.org/dataset/{{$ctrl.dataset.key}}">Go to dataset</md-button>
+                        </md-card-actions>
                     </div>
                 </div>
+                <md-divider></md-divider>
                 <table class="table table-responsive-vertical">
                     <thead>
                     <tr>
                         <th>Started</th>
                         <th>Finished</th>
                         <th>Duration</th>
-                        <th class="text-right">Recieved</th>
+                        <th ng-show="$ctrl.showAll">Finish reason</th>
+                        <th class="text-right" ng-show="$ctrl.showAll">Recieved</th>
                         <th class="text-right">New</th>
                         <th class="text-right">Updated</th>
                         <th class="text-right">Unchanged</th>
-                        <th class="text-right">Failed</th>
+                        <th class="text-right" ng-show="$ctrl.showAll">Failed</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="row in $ctrl.rowCollection.results">
+                    <tr ng-repeat="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'">
                         <td>{{row.startedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
                         <td>{{row.finishedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
                         <td>{{$ctrl.getDuration(row) | amDurationFormat : 'hours'}}</td>
-                        <td class="text-right">
-                            <span ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError == 0">{{row.fragmentsReceived}}</span>
+                        <td ng-show="$ctrl.showAll">{{ row.finishReason }}</td>
+                        <td class="text-right" ng-show="$ctrl.showAll">
+                            <span ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError == 0">{{row.fragmentsReceived | localNumber}}</span>
                             <span class="badge-red"
                                   ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError != 0">
-                                    {{row.fragmentsReceived}}
+                                    {{row.fragmentsReceived | localNumber}}
                                     <md-tooltip md-direction="top">Received fragments expected to equal New + Updated + Unchanged + Errors</md-tooltip>
                                 </span>
                         </td>
-                        <td class="text-right">{{row.rawOccurrencesPersistedNew}}</td>
-                        <td class="text-right">{{row.rawOccurrencesPersistedUpdated}}</td>
-                        <td class="text-right">{{row.rawOccurrencesPersistedUnchanged}}</td>
-                        <td class="text-right">
-                            <span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError}}</span>
+                        <td class="text-right">{{row.rawOccurrencesPersistedNew | localNumber}}</td>
+                        <td class="text-right">{{row.rawOccurrencesPersistedUpdated | localNumber}}</td>
+                        <td class="text-right">{{row.rawOccurrencesPersistedUnchanged | localNumber}}</td>
+                        <td class="text-right" ng-show="$ctrl.showAll">
+                            <span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError | localNumber}}</span>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0">
+                    <h3>No crawl entries for this data</h3>
+                    <p>This can be the case if the dataset hasn't been crawled since logging was introduced a couple of years ago</p>
+                </div>
             </md-content>
         </div>
 
