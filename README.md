@@ -11,3 +11,40 @@ These tools target users who are familiar with the GBIF data management processe
   4. The synchronisation state of a Living Atlas when run as a gateway for publishign to GBIF (e.g. Oz, UK)
   5. The crawl history of a dataset 
   6. The crawl logs (ELK)
+
+
+## Running the project
+
+```
+npm install
+npm run serve
+```
+
+Other options 
+
+* `npm install` to install the dependencies
+* `npm run build` to build an optimized version of your application in /dist
+* `npm run serve` to launch a browser sync server on your source files
+* `npm run serve:dist` to launch a server on your optimized application
+* `npm run test` to launch your unit tests with Karma
+* `npm run test:auto` to launch your unit tests with Karma in watch mode
+
+## Code
+The project is generated with [Yeoman](http://yeoman.io/generators/) and [generator-fountain-webapp](https://github.com/FountainJS/generator-fountain-webapp/tree/e37f2ad97e354f410f14995650284ea24b5f7bf3)
+
+It is using npm and webpack to handle dependencies
+[Angular 1](https://angularjs.org/) as framework
+[Angular Material](https://material.angularjs.org/latest/) as ui components
+
+## Project structure
+The structure of the project is as decided by the generator. You can read more about the reasoning on [generator-fountain-webapp](https://github.com/FountainJS/generator-fountain-webapp/tree/e37f2ad97e354f410f14995650284ea24b5f7bf3)
+
+## Issues and contributions
+If you see any issues please do report them.
+
+If it has to do with the build, then it is best directed at [generator-fountain-webapp](https://github.com/FountainJS/generator-fountain-webapp/tree/e37f2ad97e354f410f14995650284ea24b5f7bf3)
+If it has to do with browser compatability, component functionality or visuals then it is best directed at Angular and Angular Material. They are all nice communities that accepts pull requests.
+
+The project is more or less as generated, but with a few added libraries and a minimum of styling. There is no ambitions to do any styling beyond what is provided by the libraries.
+
+Ideas is also welcomed
