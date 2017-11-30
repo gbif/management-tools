@@ -1,14 +1,13 @@
 <div class="card-area">
-    <!--<h2 class="md-headline">Crawl history</h2>-->
     <md-card>
         <md-nav-bar
                 md-no-ink-bar="disableInkBar"
                 md-selected-nav-item="$ctrl.currentNavItem"
                 nav-bar-aria-label="navigation links">
-            <md-nav-item  md-nav-click="goto('page1')"  name="tool">
+            <md-nav-item md-nav-href="#" name="tool">
                 Crawl history
             </md-nav-item>
-            <md-nav-item  md-nav-click="goto('page1')"  name="about">
+            <md-nav-item md-nav-href="#" name="about">
                 About
             </md-nav-item>
         </md-nav-bar>
@@ -67,7 +66,7 @@
                     </div>
                 </div>
                 <md-divider></md-divider>
-                <table class="table table-responsive-vertical">
+                <table class="table table-responsive-vertical table-striped table-linked">
                     <thead>
                     <tr>
                         <th>Started</th>
@@ -79,10 +78,11 @@
                         <th class="text-right">Updated</th>
                         <th class="text-right">Unchanged</th>
                         <th class="text-right" ng-show="$ctrl.showAll">Failed</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat-start="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'" ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]">
+                    <tr ng-repeat-start="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'">
                         <td>{{row.startedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
                         <td>{{row.finishedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
                         <td>{{$ctrl.getDuration(row) | amDurationFormat : 'hours'}}</td>
@@ -100,6 +100,11 @@
                         <td class="text-right">{{row.rawOccurrencesPersistedUnchanged | localNumber}}</td>
                         <td class="text-right" ng-show="$ctrl.showAll">
                             <span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError | localNumber}}</span>
+                        </td>
+                        <td class="text-right">
+                            <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
+                                <i class="material-icons">more_vert</i>
+                            </span>
                         </td>
                     </tr>
                     <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index] && ($ctrl.showAll || row.finishReason === 'NORMAL')">

@@ -17,5 +17,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('iptSyncState', {
       url: '/ipt-sync-state?url',
       component: 'iptSyncState'
+    })
+    .state('overcrawls', {
+      url: '/overcrawls',
+      component: 'overcrawls'
     });
 }

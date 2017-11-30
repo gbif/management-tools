@@ -5,6 +5,7 @@ var todos = require('./app/todos/todos');
 var App = require('./app/containers/App');
 var CrawlHistory = require('./app/containers/crawlHistory/CrawlHistory');
 var IptSyncState = require('./app/containers/iptSyncState/iptSyncState');
+var Overcrawls = require('./app/containers/overcrawls/Overcrawls');
 var Header = require('./app/components/Header');
 var Nav = require('./app/components/Nav');
 var MainSection = require('./app/components/MainSection');
@@ -15,17 +16,19 @@ require('angular-ui-router');
 require('angular-material');
 require('angular-moment');
 require('angular-sanitize');
+require('angular-chart.js');
 var routesConfig = require('./routes');
 
 import './index.styl';
 
 angular
-  .module('app', ['ui.router', 'ngMaterial', 'angularMoment', 'ngSanitize'])
+  .module('app', ['ui.router', 'ngMaterial', 'angularMoment', 'ngSanitize', 'chart.js'])
   .config(routesConfig)
   .service('todoService', todos.TodoService)
   .component('app', App)
   .component('crawlHistory', CrawlHistory)
   .component('iptSyncState', IptSyncState)
+  .component('overcrawls', Overcrawls)
   .component('headerComponent', Header)
   .component('navComponent', Nav)
   .component('footerComponent', Footer)

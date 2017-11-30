@@ -6,11 +6,6 @@ module.exports = {
   controller: CrawlHistory
 };
 
-function isGuid(stringToTest) {
-  var regexGuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/gi;
-  return regexGuid.test(stringToTest);
-}
-
 function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
   var vm = this;
   vm.$http = $http;
@@ -25,35 +20,6 @@ function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
   if (vm.uuid) {
     vm.getCrawlData();
   }
-
-  vm.querySearch = function (query) {
-    var deferred = $q.defer();
-    $http.get('https://api.gbif.org/v1/dataset/suggest', {params: {limit: 20, q: query}}).then(function (results) {
-      deferred.resolve(results.data.map(function (e) {
-        return {value: e.key, title: e.title};
-      }));
-    });
-    return deferred.promise;
-  };
-
-  vm.selectedItemChange = function (item) {
-    vm.uuid = item.value;
-    vm.getCrawlData();
-  };
-
-  vm.inputChanged = function (item) {
-    if (isGuid(item)) {
-      vm.getCrawlData();
-    }
-  };
-
-  vm.isInSync = function (count) {
-    var results = _.get(vm, 'rowCollection.results', []);
-    var first = _.find(results, function (e) {
-      return e.finishReason === 'NORMAL' && true;
-    });
-    return _.get(first, 'fragmentsReceived', -1) === count;
-  };
 }
 
 CrawlHistory.prototype = {
@@ -85,14 +51,42 @@ CrawlHistory.prototype = {
       });
   },
   clearDataset: function () {
-    var vm = this;
-    vm.uuid = vm.rowCollection = vm.dataset = undefined;
-    vm.$state.go('.', {uuid: undefined});
-    vm.expandedRowMap = {};
+    this.uuid = this.rowCollection = this.dataset = undefined;
+    this.$state.go('.', {uuid: undefined});
+    this.expandedRowMap = {};
   },
   getDuration: function (row) {
-    var vm = this;
-    var duration = vm.moment.duration(vm.moment(row.finishedCrawling).diff(vm.moment(row.startedCrawling)));
+    var duration = this.moment.duration(this.moment(row.finishedCrawling).diff(this.moment(row.startedCrawling)));
     return duration.asHours();
+  },
+  inputChanged: function (item) {
+    if (this.isGuid(item)) {
+      this.getCrawlData();
+    }
+  },
+  selectedItemChange: function (item) {
+    this.uuid = item.value;
+    this.getCrawlData();
+  },
+  isInSync: function (count) {
+    var results = _.get(this, 'rowCollection.results', []);
+    var first = _.find(results, function (e) {
+      return e.finishReason === 'NORMAL' && true;
+    });
+    return _.get(first, 'fragmentsReceived', -1) === count;
+  },
+  querySearch: function (query) {
+    var deferred = this.$q.defer();
+    this.$http.get('https://api.gbif.org/v1/dataset/suggest', {params: {limit: 20, q: query}}).then(function (results) {
+      deferred.resolve(results.data.map(function (e) {
+        return {value: e.key, title: e.title};
+      }));
+    });
+    return deferred.promise;
+  },
+  isGuid: function (stringToTest) {
+    var regexGuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/gi;
+    return regexGuid.test(stringToTest);
   }
-};
+}
+;

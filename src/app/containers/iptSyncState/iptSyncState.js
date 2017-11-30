@@ -2,6 +2,8 @@ var about = require('./about.md');
 var _ = require('lodash');
 var async = require('async');
 
+var results = require('./test.json');
+
 module.exports = {
   template: require('./iptSyncState.html'),
   controller: syncState
@@ -72,5 +74,3 @@ function syncState($http, $log, $stateParams, $state, moment, $q) {
     vm.getInventory(vm.url);
   }
 }
-
-var results = require('./test.json');

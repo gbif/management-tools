@@ -1,3 +1,5 @@
+$stripeColor := #fdfdfd;
+
 .table {
   border-collapse: collapse;
 }
@@ -90,7 +92,7 @@ th {
 }
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #f5f5f5;
+  background-color: $stripeColor;
 }
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
@@ -156,7 +158,7 @@ th {
     background-color: #ffffff;
   }
   .table-responsive-vertical > .table-striped > tbody > tr > td:nth-child(odd) {
-    background-color: #f5f5f5;
+    background-color: $stripeColor;
   }
   .table-responsive-vertical > .table-hover > tbody > tr:hover > td,
   .table-responsive-vertical > .table-hover > tbody > tr:hover {

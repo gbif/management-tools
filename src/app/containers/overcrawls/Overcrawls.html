@@ -1,0 +1,79 @@
+<div class="card-area">
+    <md-card>
+        <md-nav-bar
+                md-no-ink-bar="disableInkBar"
+                md-selected-nav-item="$ctrl.currentNavItem"
+                nav-bar-aria-label="navigation links">
+            <md-nav-item md-nav-href="#" name="tool">
+                Overcrawled Datasets
+            </md-nav-item>
+            <md-nav-item md-nav-href="#" name="about">
+                About
+            </md-nav-item>
+        </md-nav-bar>
+
+        <div ng-show="$ctrl.currentNavItem == 'tool'">
+            <md-content class="md-padding white">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Overcrawled datasets</span>
+                        <span class="md-subhead">Illustrates datasets with occurrences from multiple crawl attempts.</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <div>
+                    <table class="table table-responsive-vertical table-striped table-linked">
+                        <thead>
+                        <th>Dataset</th>
+                        <th>Count</th>
+                        <th>Number crawls</th>
+                        <th>Histogram</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat-start="dataset in $ctrl.datasets">
+                            <td><a href="http://www.gbif.org/dataset/{{dataset.datasetKey}}" target="_blank">{{dataset.datasetKey}}</a></td>
+                            <td>{{dataset.lastCrawlCount | localNumber}}</td>
+                            <td>{{dataset.lastCrawlId}}</td>
+                            <td>
+                                <div class="gb-chart" ng-if="dataset.crawlInfo.length < 100">
+                                    <div ng-repeat="crawl in dataset.crawlInfo" style="width:20px;height:{{$ctrl.getHeight(dataset.crawlInfo, crawl)}}%;max-width: {{$ctrl.getMaxWidth(dataset.crawlInfo)}}%" title="crawl {{crawl.crawlId}}: {{crawl.count | localNumber}}"></div>
+                                </div>
+                                <div ng-if="dataset.crawlInfo.length >= 100" class="text-right">
+                                    Date from {{dataset.crawlInfo.length}} crawls
+                                </div>
+                            </td>
+                            <td class="text-right">
+                            <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
+                                <i class="material-icons">more_vert</i>
+                            </span>
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index]">
+                            <td colspan="9">
+                                <code>
+                                <pre>{{dataset | json : spacing}}
+                                </pre>
+                                </code>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0">
+                    <h3>No crawl entries for this data</h3>
+                    <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>
+                </div>
+            </md-content>
+        </div>
+
+        <div ng-show="$ctrl.currentNavItem == 'about'">
+            <md-content class="md-padding white">
+                <div ng-bind-html="$ctrl.aboutContent"></div>
+            </md-content>
+        </div>
+
+    </md-card>
+
+</div>
