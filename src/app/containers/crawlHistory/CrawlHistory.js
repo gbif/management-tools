@@ -19,6 +19,7 @@ function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
   vm.$state = $state;
   vm.$log = $log;
   vm.currentNavItem = 'tool';
+  vm.expandedRowMap = {};
   vm.aboutContent = about;
   vm.uuid = $stateParams.uuid;
   if (vm.uuid) {
@@ -87,6 +88,7 @@ CrawlHistory.prototype = {
     var vm = this;
     vm.uuid = vm.rowCollection = vm.dataset = undefined;
     vm.$state.go('.', {uuid: undefined});
+    vm.expandedRowMap = {};
   },
   getDuration: function (row) {
     var vm = this;

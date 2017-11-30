@@ -82,7 +82,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'">
+                    <tr ng-repeat-start="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'" ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]">
                         <td>{{row.startedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
                         <td>{{row.finishedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
                         <td>{{$ctrl.getDuration(row) | amDurationFormat : 'hours'}}</td>
@@ -100,6 +100,14 @@
                         <td class="text-right">{{row.rawOccurrencesPersistedUnchanged | localNumber}}</td>
                         <td class="text-right" ng-show="$ctrl.showAll">
                             <span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError | localNumber}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index] && ($ctrl.showAll || row.finishReason === 'NORMAL')">
+                        <td colspan="9">
+                            <code>
+                                <pre>{{row | json : spacing}}
+                                </pre>
+                            </code>
                         </td>
                     </tr>
                     </tbody>

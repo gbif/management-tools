@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cfcb4091-c4be-430a-897e-b331c48260f7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.html" afterPath="$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.js" afterPath="$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.js" />
     </list>
     <ignored path="management-tools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,25 +24,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CrawlHistory.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CrawlHistory.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="743">
-              <caret line="100" column="70" lean-forward="false" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
+            <state relative-caret-position="436">
+              <caret line="84" column="202" lean-forward="false" selection-start-line="84" selection-start-column="202" selection-end-line="84" selection-end-column="202" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="585">
-                <caret line="39" column="61" lean-forward="true" selection-start-line="39" selection-start-column="61" selection-end-line="39" selection-end-column="61" />
-                <folding />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -49,8 +37,8 @@
       <file leaf-file-name="CrawlHistory.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="13" />
+            <state relative-caret-position="315">
+              <caret line="21" column="25" lean-forward="false" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -63,6 +51,7 @@
       <find>TEXT-ALIGN</find>
       <find>value$</find>
       <find>value</find>
+      <find>vm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -90,9 +79,9 @@
         <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/src/index.styl" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.js" />
         <option value="$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.html" />
-        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -407,12 +396,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1511953840221</updated>
-      <workItem from="1512033908729" duration="15354000" />
+      <workItem from="1512033908729" duration="16795000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15354000" />
+    <option name="totallyTimeSpent" value="16795000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="556" y="23" width="1823" height="1289" extended-state="0" />
@@ -797,30 +786,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="750">
+            <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="13" />
+        <state relative-caret-position="315">
+          <caret line="21" column="25" lean-forward="false" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/containers/crawlHistory/CrawlHistory.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="743">
-          <caret line="100" column="70" lean-forward="false" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
+        <state relative-caret-position="436">
+          <caret line="84" column="202" lean-forward="false" selection-start-line="84" selection-start-column="202" selection-end-line="84" selection-end-column="202" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="585">
-            <caret line="39" column="61" lean-forward="true" selection-start-line="39" selection-start-column="61" selection-end-line="39" selection-end-column="61" />
-            <folding />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
