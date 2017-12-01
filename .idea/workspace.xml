@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cfcb4091-c4be-430a-897e-b331c48260f7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/containers/iptSyncState/iptSyncState.html" afterPath="$PROJECT_DIR$/src/app/containers/iptSyncState/iptSyncState.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.html" afterPath="$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.js" afterPath="$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.styl" afterPath="$PROJECT_DIR$/src/index.styl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/table.styl" afterPath="$PROJECT_DIR$/src/table.styl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/components/Header.html" afterPath="$PROJECT_DIR$/src/app/components/Header.html" />
     </list>
     <ignored path="management-tools.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,15 +33,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Overcrawls.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Overcrawls.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="40" lean-forward="false" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+            <state relative-caret-position="435">
+              <caret line="29" column="63" lean-forward="true" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
               <folding>
                 <element signature="n#style#0;n#th#1;n#thead#0;n#table#0;n#div#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#td#5;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Header.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/components/Header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="82" lean-forward="false" selection-start-line="20" selection-start-column="82" selection-end-line="20" selection-end-column="82" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -135,7 +139,6 @@
         <option value="$PROJECT_DIR$/src/app/containers/welcome.md" />
         <option value="$PROJECT_DIR$/src/app/containers/App.js" />
         <option value="$PROJECT_DIR$/src/app/components/Header.js" />
-        <option value="$PROJECT_DIR$/src/app/components/Header.html" />
         <option value="$PROJECT_DIR$/src/app/components/Nav.html" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/app/containers/iptSyncState/test.json" />
@@ -154,6 +157,7 @@
         <option value="$PROJECT_DIR$/src/index.styl" />
         <option value="$PROJECT_DIR$/src/app/containers/iptSyncState/iptSyncState.html" />
         <option value="$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.html" />
+        <option value="$PROJECT_DIR$/src/app/components/Header.html" />
       </list>
     </option>
   </component>
@@ -326,6 +330,28 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="management-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="management-tools" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="conf" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -452,12 +478,12 @@
       <option name="presentableId" value="Default" />
       <updated>1511953840221</updated>
       <workItem from="1512033908729" duration="28728000" />
-      <workItem from="1512118623567" duration="5964000" />
+      <workItem from="1512118623567" duration="6590000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34692000" />
+    <option name="totallyTimeSpent" value="35318000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="556" y="23" width="1823" height="1289" extended-state="0" />
@@ -754,13 +780,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/components/Header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="4" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -881,12 +900,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/containers/overcrawls/Overcrawls.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="40" lean-forward="false" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+        <state relative-caret-position="435">
+          <caret line="29" column="63" lean-forward="true" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
           <folding>
             <element signature="n#style#0;n#th#1;n#thead#0;n#table#0;n#div#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#td#5;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/Header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="82" lean-forward="false" selection-start-line="20" selection-start-column="82" selection-end-line="20" selection-end-column="82" />
+          <folding />
         </state>
       </provider>
     </entry>
