@@ -16,6 +16,18 @@ function Overcrawls($http, $log, $stateParams, $state, moment, $q) {
   vm.currentNavItem = 'tool';
   vm.expandedRowMap = {};
   vm.aboutContent = about;
+
+  vm.columns = [
+    {field: 'recordCount', title: 'GBIF count'},
+    {field: 'lastCrawlCount', title: 'Last crawl count'},
+    {field: 'percentagePreviousCrawls', title: 'Off by %'},
+    {field: 'lastCrawlId', title: 'Last crawl id'}
+  ];
+  vm.state = {
+    sortReverse: true,
+    sortType: 'recordCount'
+  };
+
   vm.getDatasets();
 
   function compare(a, b) {
@@ -45,7 +57,7 @@ Overcrawls.prototype = {
     var vm = this;
     vm.$http.get('https://crawler.gbif.org/dataset/overcrawled')
       .then(function (response) {
-        vm.datasets = response.data;
+        vm.datasets = _.values(response.data);
         vm.populateChart();
       })
       .catch(function () {
@@ -56,5 +68,18 @@ Overcrawls.prototype = {
   },
   getMaxWidth: function (list) {
     return 100 / list.length;
+  },
+  getChartData: function (dataset) {
+    return [_.map(dataset.crawlInfo, 'count')];
+  },
+  getChartLabels: function (dataset) {
+    return _.map(dataset.crawlInfo, 'crawlId');
+  },
+  getSeverityClass: function (dataset) {
+    var offBy = Math.abs(dataset.percentagePreviousCrawls);
+    if (offBy < 5) {
+      return;
+    }
+    return offBy > 60 ? 'badge-red' : 'badge-yellow';
   }
 };

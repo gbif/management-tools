@@ -54,18 +54,24 @@ nav-component {
   color: tomato;
 }
 
-.badge-red {
-  background: tomato;
+.badge {
   color: white;
   padding: 3px 5px;
   border-radius: 3px;
 }
+.badge-red {
+  @extends .badge
+  background: tomato;
+}
+
+.badge-yellow {
+  @extends .badge
+  background: orange;
+}
 
 .badge-green {
+  @extends .badge
   background: darkseagreen;
-  color: white;
-  padding: 3px 5px;
-  border-radius: 3px;
 }
 
 .text-right {
@@ -103,9 +109,13 @@ h1, h2, h3, h4 {
 .btnLink {
   cursor: pointer;
   color: inherit;
-  text-transform: none;
+  text-decoration: none;
   &:hover {
-    text-transform: none;
+    text-decoration: none;
     color: inherit;
   }
+}
+
+.whiteSpace-nowrap {
+  white-space: nowrap;
 }

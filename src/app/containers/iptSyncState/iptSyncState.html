@@ -49,9 +49,11 @@
                         <td class="text-right">
                             <span ui-sref="crawlHistory({uuid: row.gbifKey})" class="btnLink">
                                 <i class="material-icons">timeline</i>
+                                <md-tooltip md-direction="top">Crawl history</md-tooltip>
                             </span>
                             <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
                                 <i class="material-icons">more_vert</i>
+                                <md-tooltip md-direction="top">Details</md-tooltip>
                             </span>
                         </td>
                     </tr>
