@@ -57,10 +57,11 @@ The project is more or less as generated, but with a few added libraries and a m
 Ideas is also welcomed
 
 ## Libraries of interest when developing new tools
-[Lodash](https://lodash.com/docs/4.17.4) : useful utilities
-[Angular](https://angularjs.org/)
-[Angular material](https://material.angularjs.org/1.1.5/) : ui components a la autocomplete
-[Moment JS](https://momentjs.com/) : formatting dates
-[Angular Moment](https://github.com/urish/angular-moment)
-[async](https://caolan.github.io/async/docs.html) : for making tons of async calls
-[Marked](https://www.npmjs.com/package/marked) : rendering markdwon
+
+* [Lodash](https://lodash.com/docs/4.17.4) : useful utilities
+* [Angular](https://angularjs.org/)
+* [Angular material](https://material.angularjs.org/1.1.5/) : ui components a la autocomplete
+* [Moment JS](https://momentjs.com/) : formatting dates
+* [Angular Moment](https://github.com/urish/angular-moment)
+* [async](https://caolan.github.io/async/docs.html) : for making tons of async calls
+* [Marked](https://www.npmjs.com/package/marked) : rendering markdwon
