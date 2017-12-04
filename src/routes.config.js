@@ -11,7 +11,14 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
       component: 'app'
     })
     .state('crawlHistory', {
-      url: '/crawl-history?uuid',
+      url: '/crawl-history?uuid&showAll',
+      params: {
+        showAll: {
+          type: 'bool',
+          value: false,
+          squash: true
+        }
+      },
       component: 'crawlHistory'
     })
     .state('iptSyncState', {

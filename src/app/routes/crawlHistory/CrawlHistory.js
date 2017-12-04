@@ -17,7 +17,9 @@ function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
   vm.currentNavItem = 'tool';
   vm.expandedRowMap = {};
   vm.aboutContent = about;
+  vm.limit = 500;
   vm.uuid = $stateParams.uuid;
+  vm.showAll = $stateParams.showAll;
   if (vm.uuid) {
     vm.getCrawlData();
   }
@@ -26,15 +28,20 @@ function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
 CrawlHistory.prototype = {
   getCrawlData: function () {
     var vm = this;
-    vm.$state.go('.', {uuid: vm.uuid});
+    vm.$state.go('.', {uuid: vm.uuid, showAll: vm.showAll});
     vm.getDataset();
     vm.rowCollection = undefined;
-    vm.$http.get('http://api.gbif.org/v1/dataset/' + vm.uuid + '/process', {params: {limit: 1000}})
+    vm.$http.get('http://api.gbif.org/v1/dataset/' + vm.uuid + '/process', {params: {limit: vm.limit}})
       .then(function (response) {
         vm.rowCollection = response.data;
+        vm.finishReasonNormalCount = _.filter(response.data.results, {finishReason: 'NORMAL'}).length;
       })
       .catch(function () {
       });
+  },
+  updateShowAll: function (state) {
+    this.showAll = state;
+    this.$state.go('.', {uuid: this.uuid, showAll: this.showAll});
   },
   getDataset: function () {
     var vm = this;
@@ -69,12 +76,15 @@ CrawlHistory.prototype = {
     this.uuid = item.value;
     this.getCrawlData();
   },
-  isInSync: function (count) {
+  isOutOfSync: function (count) {
     var results = _.get(this, 'rowCollection.results', []);
     var first = _.find(results, function (e) {
-      return e.finishReason === 'NORMAL' && true;
+      return e.finishReason === 'NORMAL' && _.get(e, 'crawlJob.endpointType') === 'DWC_ARCHIVE';
     });
-    return _.get(first, 'fragmentsReceived', -1) === count;
+    if (!first) {
+      return false;
+    }
+    return _.get(first, 'fragmentsReceived', -1) !== count;
   },
   querySearch: function (query) {
     var deferred = this.$q.defer();

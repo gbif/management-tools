@@ -48,14 +48,22 @@
                         <span class="md-headline">{{ $ctrl.dataset.title}}</span>
                         <span class="md-subhead">{{ $ctrl.dataset.key}}</span>
                         <span class="md-subhead">{{ $ctrl.occurrences.count | localNumber }} occurrences in the GBIF index
-                            <!--<span ng-if="!$ctrl.isInSync($ctrl.occurrences.count)" class="badge-red">Out of sync</span>-->
+                            <span ng-if="$ctrl.isOutOfSync($ctrl.occurrences.count)" class="badge-red">
+                                Out of sync
+                                <md-tooltip md-direction="top">Last NORMAL crawl received count doesn't equal occurrence index count</md-tooltip>
+                            </span>
                         </span>
                     </md-card-title-text>
                 </md-card-title>
+                <div>
+                    <span ng-if="$ctrl.rowCollection.count > $ctrl.limit" class="badge-green">
+                        Showing last {{$ctrl.limit}} crawls out of {{$ctrl.rowCollection.count}}
+                    </span>
+                </div>
                 <div layout-wrap layout-gt-sm="row" >
                     <md-input-container  flex-gt-sm="50">
-                        <md-checkbox ng-model="$ctrl.showAll" aria-label="Show all">
-                            Show details
+                        <md-checkbox ng-model="$ctrl.showAll" ng-change="$ctrl.updateShowAll($ctrl.showAll)" aria-label="Show all">
+                            Show details {{$ctrl.showAll}}
                         </md-checkbox>
                     </md-input-container>
                     <div flex-gt-sm="50">
@@ -123,6 +131,11 @@
                     <h3>No crawl entries for this data</h3>
                     <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>
                 </div>
+                <div class="emptyInfo" ng-if="$ctrl.rowCollection.count > 0 && $ctrl.finishReasonNormalCount == 0 && !$ctrl.showAll">
+                    <h3>No crawl entries finished normally</h3>
+                    <p>You might want to <a href="" class="btnLink underline" ng-click="$ctrl.updateShowAll(true)">show all</a></p>
+                </div>
+
             </md-content>
         </div>
 
