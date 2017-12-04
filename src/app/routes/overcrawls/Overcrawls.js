@@ -6,6 +6,7 @@ module.exports = {
   controller: Overcrawls
 };
 
+/** @ngInject */
 function Overcrawls($http, $log, $stateParams, $state, moment, $q) {
   var vm = this;
   vm.$http = $http;

@@ -9,6 +9,7 @@ module.exports = {
   controller: syncState
 };
 
+/** @ngInject */
 function syncState($http, $log, $stateParams, $state, moment, $q) {
   var vm = this;
   vm.$http = $http;
