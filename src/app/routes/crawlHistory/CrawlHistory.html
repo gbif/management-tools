@@ -66,57 +66,59 @@
                     </div>
                 </div>
                 <md-divider></md-divider>
-                <table class="table table-responsive-vertical table-striped table-linked">
-                    <thead>
-                    <tr>
-                        <th>Started</th>
-                        <th>Finished</th>
-                        <th>Duration</th>
-                        <th ng-show="$ctrl.showAll">Finish reason</th>
-                        <th class="text-right" ng-show="$ctrl.showAll">Recieved</th>
-                        <th class="text-right">New</th>
-                        <th class="text-right">Updated</th>
-                        <th class="text-right">Unchanged</th>
-                        <th class="text-right" ng-show="$ctrl.showAll">Failed</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat-start="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'">
-                        <td>{{row.startedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
-                        <td>{{row.finishedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
-                        <td>{{$ctrl.getDuration(row) | amDurationFormat : 'hours'}}</td>
-                        <td ng-show="$ctrl.showAll">{{ row.finishReason }}</td>
-                        <td class="text-right" ng-show="$ctrl.showAll">
-                            <span ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError == 0">{{row.fragmentsReceived | localNumber}}</span>
-                            <span class="badge-red"
-                                  ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError != 0">
-                                    {{row.fragmentsReceived | localNumber}}
-                                    <md-tooltip md-direction="top">Received fragments expected to equal New + Updated + Unchanged + Errors</md-tooltip>
+                <div class="table-container">
+                    <table class="gb-table-linked table-striped">
+                        <thead>
+                        <tr>
+                            <th>Started</th>
+                            <th>Finished</th>
+                            <th>Duration</th>
+                            <th ng-show="$ctrl.showAll">Finish reason</th>
+                            <th class="text-right" ng-show="$ctrl.showAll">Recieved</th>
+                            <th class="text-right">New</th>
+                            <th class="text-right">Updated</th>
+                            <th class="text-right">Unchanged</th>
+                            <th class="text-right" ng-show="$ctrl.showAll">Failed</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat-start="row in $ctrl.rowCollection.results" ng-if="$ctrl.showAll || row.finishReason === 'NORMAL'">
+                            <td>{{row.startedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
+                            <td>{{row.finishedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>
+                            <td>{{$ctrl.getDuration(row) | amDurationFormat : 'hours'}}</td>
+                            <td ng-show="$ctrl.showAll">{{ row.finishReason }}</td>
+                            <td class="text-right" ng-show="$ctrl.showAll">
+                                <span ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError == 0">{{row.fragmentsReceived | localNumber}}</span>
+                                <span class="badge-red"
+                                      ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError != 0">
+                                        {{row.fragmentsReceived | localNumber}}
+                                        <md-tooltip md-direction="top">Received fragments expected to equal New + Updated + Unchanged + Errors</md-tooltip>
+                                    </span>
+                            </td>
+                            <td class="text-right">{{row.rawOccurrencesPersistedNew | localNumber}}</td>
+                            <td class="text-right">{{row.rawOccurrencesPersistedUpdated | localNumber}}</td>
+                            <td class="text-right">{{row.rawOccurrencesPersistedUnchanged | localNumber}}</td>
+                            <td class="text-right" ng-show="$ctrl.showAll">
+                                <span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError | localNumber}}</span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
+                                    <i class="material-icons">more_vert</i>
                                 </span>
-                        </td>
-                        <td class="text-right">{{row.rawOccurrencesPersistedNew | localNumber}}</td>
-                        <td class="text-right">{{row.rawOccurrencesPersistedUpdated | localNumber}}</td>
-                        <td class="text-right">{{row.rawOccurrencesPersistedUnchanged | localNumber}}</td>
-                        <td class="text-right" ng-show="$ctrl.showAll">
-                            <span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError | localNumber}}</span>
-                        </td>
-                        <td class="text-right">
-                            <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
-                                <i class="material-icons">more_vert</i>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index] && ($ctrl.showAll || row.finishReason === 'NORMAL')">
-                        <td colspan="9">
-                            <code>
-                                <pre>{{row | json : spacing}}
-                                </pre>
-                            </code>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index] && ($ctrl.showAll || row.finishReason === 'NORMAL')">
+                            <td colspan="9">
+                                <code>
+                                    <pre>{{row | json : spacing}}
+                                    </pre>
+                                </code>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0">
                     <h3>No crawl entries for this data</h3>
                     <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>

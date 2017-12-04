@@ -1,0 +1,87 @@
+<div class="card-area">
+    <!--<h2 class="md-headline">Crawl history</h2>-->
+    <md-card>
+        <md-nav-bar
+                md-no-ink-bar="disableInkBar"
+                md-selected-nav-item="$ctrl.currentNavItem"
+                nav-bar-aria-label="navigation links">
+            <md-nav-item  md-nav-click="goto('page1')"  name="tool">
+                IPT sync state
+            </md-nav-item>
+            <md-nav-item  md-nav-click="goto('page1')"  name="about">
+                About
+            </md-nav-item>
+        </md-nav-bar>
+
+        <div ng-show="$ctrl.currentNavItem == 'tool'">
+            <div layout-gt-xs="row" layout-padding ng-if="!$ctrl.rowCollection">
+                <md-input-container class="md-block" flex-gt-xs>
+                    <label>Enter a IPT url</label>
+                    <input type="url" ng-model="$ctrl.url">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <md-button ng-click="$ctrl.getInventory($ctrl.url)">Get inventory</md-button>
+                </md-input-container>
+            </div>
+
+            <md-content class="md-padding white" ng-if="$ctrl.registeredResources">
+                <md-divider></md-divider>
+                <div class="table-container">
+                    <table class="gb-table-linked table-striped">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Last published</th>
+                            <th>Source</th>
+                            <th class="text-right">IPT count</th>
+                            <th class="text-right">GBIF count</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat-start="row in $ctrl.registeredResources">
+                            <td><a ng-href="https://gbif-uat.org/dataset/{{row.gbifKey}}">{{row.title}}</a></td>
+                            <td>{{row.lastPublished | amDateFormat:'YYYY-MM-DD'}}</td>
+                            <td><a ng-href="{{row.dwca}}" ng-if="row.dwca">DwCA</a></td>
+                            <td class="text-right">{{row.records | localNumber}}</td>
+                            <td class="text-right">
+                                <span ng-class="{'badge-red': row.records !== row._gbifCount, 'badge-green': row.records === row._gbifCount}">{{row._gbifCount | localNumber}}</span>
+                            </td>
+                            <td class="text-right">
+                                <span ui-sref="crawlHistory({uuid: row.gbifKey})" class="btnLink">
+                                    <i class="material-icons">timeline</i>
+                                    <md-tooltip md-direction="top">Crawl history</md-tooltip>
+                                </span>
+                                <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
+                                    <i class="material-icons">more_vert</i>
+                                    <md-tooltip md-direction="top">Details</md-tooltip>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index]">
+                            <td colspan="9">
+                                <code>
+                                    <pre>{{row | json : spacing}}
+                                    </pre>
+                                </code>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--<div class="emptyInfo" ng-if="$ctrl.registeredResources.count === 0">-->
+                    <!--<h3>No crawl entries for this data</h3>-->
+                    <!--<p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>-->
+                <!--</div>-->
+            </md-content>
+        </div>
+
+        <div ng-show="$ctrl.currentNavItem == 'about'">
+            <md-content class="md-padding white">
+                <div ng-bind-html="$ctrl.aboutContent"></div>
+            </md-content>
+        </div>
+
+    </md-card>
+
+</div>
