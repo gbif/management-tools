@@ -13,7 +13,7 @@ function Nav($state, $log) {
     {name: 'Dataset Crawl History', state: 'crawlHistory'},
     {name: 'Overcrawled datasets', state: 'overcrawls'},
     {name: 'IPT sync state', state: 'iptSyncState'},
-    {name: 'Current crawls'}
+    {name: 'Crawling Monitor', state: 'currentCrawls'}
   ];
 }
 

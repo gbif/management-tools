@@ -16,6 +16,7 @@ var App = require('./app/routes/App');
 var CrawlHistory = require('./app/routes/crawlHistory/CrawlHistory');
 var IptSyncState = require('./app/routes/iptSyncState/iptSyncState');
 var Overcrawls = require('./app/routes/overcrawls/Overcrawls');
+var CurrentCrawls = require('./app/routes/currentCrawls/CurrentCrawls');
 
 // components
 var Header = require('./app/components/Header');
@@ -33,6 +34,7 @@ angular
   .component('crawlHistory', CrawlHistory)
   .component('iptSyncState', IptSyncState)
   .component('overcrawls', Overcrawls)
+  .component('currentCrawls', CurrentCrawls)
   .component('headerComponent', Header)
   .component('navComponent', Nav);
 

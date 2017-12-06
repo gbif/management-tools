@@ -28,5 +28,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('overcrawls', {
       url: '/overcrawls',
       component: 'overcrawls'
+    })
+    .state('currentCrawls', {
+      url: '/crawling-monitor',
+      component: 'currentCrawls'
     });
 }

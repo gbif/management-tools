@@ -41,7 +41,7 @@ CrawlHistory.prototype = {
   },
   updateShowAll: function (state) {
     this.showAll = state;
-    this.$state.go('.', {uuid: this.uuid, showAll: this.showAll});
+    // this.$state.go('.', {showAll: this.showAll}, {inherit: true, notify: false, reload: false});
   },
   getDataset: function () {
     var vm = this;
