@@ -3,6 +3,6 @@ module.exports = materialConfig;
 /** @ngInject */
 function materialConfig($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('green')
+    .primaryPalette('indigo')
     .accentPalette('deep-orange');
 }

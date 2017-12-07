@@ -11,6 +11,11 @@ angular
       return num.toLocaleString(lang);
     };
   })
+  .filter('simplifyHttpUrls', function () {
+    return function (url) {
+      return url.replace(/^http(s)?:\/\/(www\.)?/, '');
+    };
+  })
   .filter('formatAsPercentage', function () {
     return function (percentage) {
       var formatedPercentage = 0;

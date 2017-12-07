@@ -27,13 +27,13 @@
                         <th ng-repeat="col in $ctrl.columns" style="white-space: nowrap;">
                             <a class="btnLink" href=""
                                ng-click="$ctrl.state.sortType = col.field; $ctrl.state.sortReverse = !$ctrl.state.sortReverse">
-                                	<span class="inline-block">
-                                		{{ col.title }}
-                                        <span ng-show="$ctrl.state.sortType == col.field && !$ctrl.state.sortReverse"
-                                              class="sortOrder">&#x25B2;</span>
-                						<span ng-show="$ctrl.state.sortType == col.field && $ctrl.state.sortReverse"
-                                              class="sortOrder">&#x25BC;</span>
-                                	</span>
+                                <span class="inline-block">
+                                    {{ col.title }}
+                                    <span ng-show="$ctrl.state.sortType == col.field && !$ctrl.state.sortReverse"
+                                          class="sortOrder">&#x25B2;</span>
+                                    <span ng-show="$ctrl.state.sortType == col.field && $ctrl.state.sortReverse"
+                                          class="sortOrder">&#x25BC;</span>
+                                </span>
                             </a>
                         </th>
                         <th>Histogram</th>
@@ -41,14 +41,18 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat-start="dataset in $ctrl.datasets | orderBy:$ctrl.state.sortType:$ctrl.state.sortReverse">
-                            <td><a href="http://www.gbif.org/dataset/{{dataset.datasetKey}}" target="_blank">{{dataset.datasetKey}}</a></td>
+                            <td><a href="http://www.gbif.org/dataset/{{dataset.datasetKey}}" target="_blank">{{dataset.datasetKey}}</a>
+                            </td>
                             <td>{{dataset.recordCount | localNumber}}</td>
                             <td>{{dataset.lastCrawlCount | localNumber}}</td>
-                            <td><span class="{{$ctrl.getSeverityClass(dataset)}}">{{dataset.percentagePreviousCrawls | formatAsPercentage}}%</span></td>
+                            <td><span class="{{$ctrl.getSeverityClass(dataset)}}">{{dataset.percentagePreviousCrawls | formatAsPercentage}}%</span>
+                            </td>
                             <td>{{dataset.lastCrawlId}}</td>
                             <td>
                                 <div class="gb-chart" ng-if="dataset.crawlInfo.length < 100">
-                                    <div ng-repeat="crawl in dataset.crawlInfo" style="width:20px;height:{{$ctrl.getHeight(dataset.crawlInfo, crawl)}}%;max-width: {{$ctrl.getMaxWidth(dataset.crawlInfo)}}%" title="crawl {{crawl.crawlId}}: {{crawl.count | localNumber}}"></div>
+                                    <div ng-repeat="crawl in dataset.crawlInfo"
+                                         style="width:20px;height:{{$ctrl.getHeight(dataset.crawlInfo, crawl)}}%;max-width: {{$ctrl.getMaxWidth(dataset.crawlInfo)}}%"
+                                         title="crawl {{crawl.crawlId}}: {{crawl.count | localNumber}}"></div>
                                 </div>
                                 <div ng-if="dataset.crawlInfo.length >= 100" class="text-right">
                                     Date from {{dataset.crawlInfo.length}} crawls
@@ -59,7 +63,8 @@
                                     <i class="material-icons">timeline</i>
                                      <md-tooltip md-direction="top">Crawl history</md-tooltip>
                                 </span>
-                                <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
+                                <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]"
+                                      class="btnLink">
                                     <i class="material-icons">more_vert</i>
                                     <md-tooltip md-direction="top">Details</md-tooltip>
                                 </span>
@@ -79,7 +84,8 @@
 
                 <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0">
                     <h3>No crawl entries for this data</h3>
-                    <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>
+                    <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6
+                        November 2013</p>
                 </div>
             </md-content>
         </div>
