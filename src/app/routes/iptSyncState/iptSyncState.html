@@ -17,7 +17,7 @@
             <div layout-gt-xs="row" layout-padding ng-if="!$ctrl.rowCollection">
                 <md-input-container class="md-block" flex-gt-xs>
                     <label>Enter a IPT url</label>
-                    <input type="url" ng-model="$ctrl.url">
+                    <input type="url" ng-model="$ctrl.url" ng-keydown="$ctrl.searchOnEnter($event)">
                 </md-input-container>
                 <md-input-container class="md-block">
                     <md-button ng-click="$ctrl.getInventory($ctrl.url)">Get inventory</md-button>

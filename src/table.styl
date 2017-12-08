@@ -7,6 +7,8 @@ $stripeColor := #fdfdfd;
 .table-container {
   max-width: 100%;
   overflow: auto;
+  padding: 10px;
+  margin: -10px;
 }
 .gb-table {
   border-collapse: collapse
@@ -23,6 +25,12 @@ $stripeColor := #fdfdfd;
   }
 }
 
+.gb-table--compact {
+  th, td {
+    padding 0.3rem
+  }
+}
+
 .gb-table-linked {
   @extends .gb-table;
   tbody a {
@@ -31,10 +39,27 @@ $stripeColor := #fdfdfd;
   }
 }
 
-.table-striped > tbody > tr:nth-child(odd) > td {
-  background-color: $stripeColor;
+.table-striped {
+  > tbody {
+    > tr {
+      border-bottom: 1px solid #f7f7f7;
+      &:nth-child(odd) > td {
+        background-color: rgba(0, 0, 0, 0.003);//$stripeColor;
+      }
+    }
+  }
 }
 
+.hoverBox {
+  &:hover {
+    box-shadow: 0px 1px 2px 2px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
+}
+
+.jsonRow {
+  font-size: 12px;
+}
 
 
 

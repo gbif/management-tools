@@ -7,11 +7,12 @@ module.exports = {
 };
 
 /** @ngInject */
-function CrawlHistory($http, $log, $stateParams, $state, moment, $q) {
+function CrawlHistory($http, $log, $stateParams, $state, moment, $q, env) {
   var vm = this;
   vm.$http = $http;
   vm.$q = $q;
   vm.moment = moment;
+  vm.env = env;
   vm.$state = $state;
   vm.$log = $log;
   vm.currentNavItem = 'tool';
@@ -31,7 +32,7 @@ CrawlHistory.prototype = {
     vm.$state.go('.', {uuid: vm.uuid, showAll: vm.showAll});
     vm.getDataset();
     vm.rowCollection = undefined;
-    vm.$http.get('http://api.gbif.org/v1/dataset/' + vm.uuid + '/process', {params: {limit: vm.limit}})
+    vm.$http.get(this.env.dataApi + '/dataset/' + vm.uuid + '/process', {params: {limit: vm.limit}})
       .then(function (response) {
         vm.rowCollection = response.data;
         vm.finishReasonNormalCount = _.filter(response.data.results, {finishReason: 'NORMAL'}).length;
@@ -45,13 +46,13 @@ CrawlHistory.prototype = {
   },
   getDataset: function () {
     var vm = this;
-    vm.$http.get('http://api.gbif.org/v1/dataset/' + vm.uuid)
+    vm.$http.get(this.env.dataApi + '/dataset/' + vm.uuid)
       .then(function (response) {
         vm.dataset = response.data;
       })
       .catch(function () {
       });
-    vm.$http.get('http://api.gbif.org/v1/occurrence/search?limit=0&datasetKey=' + vm.uuid)
+    vm.$http.get(this.env.dataApi + '/occurrence/search?limit=0&datasetKey=' + vm.uuid)
       .then(function (response) {
         vm.occurrences = response.data;
       })
@@ -88,7 +89,7 @@ CrawlHistory.prototype = {
   },
   querySearch: function (query) {
     var deferred = this.$q.defer();
-    this.$http.get('https://api.gbif.org/v1/dataset/suggest', {params: {limit: 20, q: query}}).then(function (results) {
+    this.$http.get(this.env.dataApi + '/dataset/suggest', {params: {limit: 20, q: query}}).then(function (results) {
       deferred.resolve(results.data.map(function (e) {
         return {value: e.key, title: e.title};
       }));

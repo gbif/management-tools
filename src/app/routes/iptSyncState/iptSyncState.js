@@ -2,7 +2,7 @@ var about = require('./about.md');
 var _ = require('lodash');
 var async = require('async');
 
-var results = require('./test.json');
+// var results = require('./test.json');
 
 module.exports = {
   template: require('./iptSyncState.html'),
@@ -10,7 +10,7 @@ module.exports = {
 };
 
 /** @ngInject */
-function syncState($http, $log, $stateParams, $state, moment, $q) {
+function syncState($http, $log, $stateParams, $state, moment, $q, env) {
   var vm = this;
   vm.$http = $http;
   vm.$q = $q;
@@ -41,27 +41,27 @@ function syncState($http, $log, $stateParams, $state, moment, $q) {
     if (!url) {
       return;
     }
-    if (!_.endsWith(url, '/inventory/dataset')) {
+    if (_.endsWith(url, '/inventory/dataset')) {
+      url = url.replace(/\/inventory\/dataset$/, '');
+    } else {
       url = url.replace(/\/$/g, '');
-      url += '/inventory/dataset';
     }
+
     vm.$state.go('.', {url: url});
 
-    $http.get(url, {params: {limit: 1000}})
+    $http.get(env.iptProxy, {params: {iptBaseURL: url}})
       .then(function (response) {
         vm.registeredResources = response.data.registeredResources;
         decorate(vm.registeredResources);
       })
-      .catch(function () {
-        vm.registeredResources = results.registeredResources;
-        decorate(vm.registeredResources);
-        $log.log(vm.registeredResources);
+      .catch(function (err) {
+        $log.error(err);
       });
   };
 
   function decorate(registeredResources) {
     async.eachLimit(registeredResources, 10, function (item, cb) {
-      $http.get('http://api.gbif-uat.org/v1/occurrence/count', {params: {datasetKey: item.gbifKey}}).then(function (results) {
+      $http.get(env.dataApi + '/occurrence/count', {params: {datasetKey: item.gbifKey}}).then(function (results) {
         item._gbifCount = results.data;
       });
       cb();
@@ -70,6 +70,12 @@ function syncState($http, $log, $stateParams, $state, moment, $q) {
       $log.log(err);
     });
   }
+
+  vm.searchOnEnter = function (event) {
+    if (event.which === 13) {
+      vm.getInventory(vm.url);
+    }
+  };
 
   if (vm.url) {
     vm.getInventory(vm.url);

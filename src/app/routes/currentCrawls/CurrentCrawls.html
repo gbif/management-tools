@@ -13,47 +13,59 @@
     </md-nav-bar>
 
     <div ng-show="$ctrl.currentNavItem == 'tool'">
-      <div layout="row" layout-xs="column" layout-padding ng-if="!$ctrl.rowCollection">
-        <md-input-container class="md-block" flex="auto">
-          <label>Search table</label>
-          <input ng-model="$ctrl.state.query">
-        </md-input-container>
-        <md-input-container flex="initial">
-          <md-checkbox ng-model="$ctrl.isLive" ng-change="$ctrl.changeLive($ctrl.isLive)" aria-label="Live view">
-            Live view
-          </md-checkbox>
-        </md-input-container>
-        <!--<md-input-container flex="initial" style="width:200px">-->
-          <!--<label>How many entries to show</label>-->
-          <!--<md-select ng-model="$ctrl.state.pageSize">-->
-            <!--<md-option ng-repeat="pageSize in $ctrl.pageSizes" ng-value="pageSize.nr">-->
-              <!--{{pageSize.name}}-->
-            <!--</md-option>-->
-          <!--</md-select>-->
-        <!--</md-input-container>-->
+      <div>
+        <md-content layout-wrap layout-gt-sm="row" layout-padding class="white">
+          <md-input-container flex-gt-sm="50">
+            <label>Search table</label>
+            <input ng-model="$ctrl.state.query">
+          </md-input-container>
+
+          <md-input-container>
+            <md-checkbox ng-model="$ctrl.isLive" ng-change="$ctrl.changeLive($ctrl.isLive)" aria-label="Live view">
+              Live view
+            </md-checkbox>
+          </md-input-container>
+          <md-input-container>
+            <md-checkbox ng-model="$ctrl.displayHelp" aria-label="Display help">
+              show help
+            </md-checkbox>
+          </md-input-container>
+          <md-input-container>
+            <md-checkbox ng-model="$ctrl.state.filterSelected" aria-label="Only show selected">
+              Only show selected
+            </md-checkbox>
+          </md-input-container>
+        </md-content>
       </div>
 
       <md-content class="md-padding white">
         <div class="table-container">
-          <table class="gb-table-linked table-striped">
+          <table class="gb-table-linked table-striped gb-table--compact">
             <thead>
-            <!--<tr>-->
-              <!--<th ng-repeat="col in $ctrl.tableColumns" class="tableHeader-rotated">-->
-                <!--<div>{{col.full}}</div>-->
-              <!--</th>-->
-              <!--<th></th>-->
-            <!--</tr>-->
+            <tr ng-if="$ctrl.displayHelp">
+              <th class="tableHeader-rotated"><div>Only show selected items</div></th>
+              <th ng-repeat="col in $ctrl.tableColumns" class="tableHeader-rotated">
+                <div>{{col.full}}</div>
+              </th>
+              <th class="tableHeader-rotated"><div>Misc</div></th>
+            </tr>
             <tr>
+              <th class="text-center">
+                <a href="" class="btnLink" ng-click="$ctrl.state.filterSelected = !$ctrl.state.filterSelected">
+                  <i class="material-icons" style="font-size:12px">filter_list</i>
+                  <md-tooltip md-direction="top">Show selected only</md-tooltip>
+                </a>
+              </th>
               <th ng-repeat="col in $ctrl.tableColumns" title="{{col.full}}" class="whiteSpace-nowrap">
                 <a class="btnLink" href=""
                    ng-click="$ctrl.state.sortType = col.field; $ctrl.state.sortReverse = !$ctrl.state.sortReverse">
                   <md-tooltip md-direction="top">{{col.full}}</md-tooltip>
-                  <span class="inline-block">
-                      {{ col.abbr }}
+                  {{ col.abbr }}
+                  <span class="inline-block" style="width:20px;">
                       <span ng-show="$ctrl.state.sortType == col.field && !$ctrl.state.sortReverse"
                             class="sortOrder">&#x25B2;</span>
                       <span ng-show="$ctrl.state.sortType == col.field && $ctrl.state.sortReverse"
-                            class="sortOrder">&#x25BC;</span>
+                          class="sortOrder">&#x25BC;</span>
                   </span>
                 </a>
               </th>
@@ -62,48 +74,60 @@
             </thead>
             <tbody>
             <!-- add md-whiteframe-4dp class to row on hover ? -->
-            <tr ng-repeat-start="row in $ctrl.crawls | filter:$ctrl.state.query | orderBy:$ctrl.state.sortType:$ctrl.state.sortReverse | limitTo:$ctrl.state.pageSize">
+            <tr ng-repeat-start="row in $ctrl.crawls | filter:$ctrl.state.query | orderBy:$ctrl.state.sortType:$ctrl.state.sortReverse | limitTo:$ctrl.state.pageSize" ng-if="!$ctrl.state.filterSelected || $ctrl.selected[row.datasetKey]">
+              <td>
+                <md-checkbox ng-model="$ctrl.selected[row.datasetKey]" aria-label="Live view"></md-checkbox>
+              </td>
               <td ng-repeat="col in $ctrl.tableColumns">
-                <span ng-if="col.field == '_url'">{{row[col.field] | simplifyHttpUrls}}</span>
-                <span ng-if="col.field != '_url'" class="text-{{row._status[col.field]}}">
+                <div ng-if="col.field == '_url'">
+                  <div>{{row[col.field] | simplifyHttpUrls}}</div>
+                  <div style="color:#3f50b5;">{{row._title}}</div>
+                </div>
+
+                <div ng-if="col.field != '_url'" class="text-{{row._status[col.field]}}">
                   {{row[col.field] | localNumber}}
                   <md-tooltip md-direction="top">{{col.full}}</md-tooltip>
+                </div>
+              </td>
+              <td class="text-right whiteSpace-nowrap">
+                <a class="btnLink" ng-href="{{row._log}}" target="_blank">
+                  <span height="20" class="logImg"/>
+                  <md-tooltip md-direction="top">Logs</md-tooltip>
+                </a>
+                <a class="btnLink" ng-href="https://www.gbif.org/dataset/{{row.datasetKey}}">
+                  <svg style="height:18px;top: -2px;position: relative;" viewBox="90 239.1 539.7 523.9" xmlns="http://www.w3.org/2000/svg">
+                    <path class="gbif-logo-svg" d="M325.5,495.4c0-89.7,43.8-167.4,174.2-167.4C499.6,417.9,440.5,495.4,325.5,495.4"></path>
+                    <path class="gbif-logo-svg" d="M534.3,731c24.4,0,43.2-3.5,62.4-10.5c0-71-42.4-121.8-117.2-158.4c-57.2-28.7-127.7-43.6-192.1-43.6
+                    c28.2-84.6,7.6-189.7-19.7-247.4c-30.3,60.4-49.2,164-20.1,248.3c-57.1,4.2-102.4,29.1-121.6,61.9c-1.4,2.5-4.4,7.8-2.6,8.8
+                    c1.4,0.7,3.6-1.5,4.9-2.7c20.6-19.1,47.9-28.4,74.2-28.4c60.7,0,103.4,50.3,133.7,80.5C401.3,704.3,464.8,731.2,534.3,731"></path>
+                  </svg>
+                  <md-tooltip md-direction="top">See on GBIF.org</md-tooltip>
+                </a>
+                <span ui-sref="crawlHistory({uuid: row.datasetKey})" class="btnLink">
+                    <i class="material-icons">timeline</i>
+                     <md-tooltip md-direction="top">Crawl history</md-tooltip>
+                </span>
+                <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">
+                  <i class="material-icons">more_vert</i>
+                  <md-tooltip md-direction="top">Details</md-tooltip>
                 </span>
               </td>
-              <!--<td>{{row.startedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>-->
-              <!--<td>{{row.finishedCrawling | amDateFormat:'YYYY-MM-DD HH:mm'}}</td>-->
-              <!--<td>{{$ctrl.getDuration(row) | amDurationFormat : 'hours'}}</td>-->
-              <!--<td ng-show="$ctrl.showAll">{{ row.finishReason }}</td>-->
-              <!--<td class="text-right" ng-show="$ctrl.showAll">-->
-                <!--<span ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError == 0">{{row.fragmentsReceived | localNumber}}</span>-->
-                <!--<span class="badge-red"-->
-                      <!--ng-if="row.fragmentsReceived - row.rawOccurrencesPersistedNew -row.rawOccurrencesPersistedUpdated - row.rawOccurrencesPersistedUnchanged - row.rawOccurrencesPersistedError != 0">-->
-                                        <!--{{row.fragmentsReceived | localNumber}}-->
-                                        <!--<md-tooltip md-direction="top">Received fragments expected to equal New + Updated + Unchanged + Errors</md-tooltip>-->
-                                    <!--</span>-->
-              <!--</td>-->
-              <!--<td class="text-right">{{row.rawOccurrencesPersistedNew | localNumber}}</td>-->
-              <!--<td class="text-right">{{row.rawOccurrencesPersistedUpdated | localNumber}}</td>-->
-              <!--<td class="text-right">{{row.rawOccurrencesPersistedUnchanged | localNumber}}</td>-->
-              <!--<td class="text-right" ng-show="$ctrl.showAll">-->
-                <!--<span ng-class="{'badge-red': row.rawOccurrencesPersistedError > 0}">{{row.rawOccurrencesPersistedError | localNumber}}</span>-->
-              <!--</td>-->
-              <!--<td class="text-right">-->
-                                <!--<span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]" class="btnLink">-->
-                                    <!--<i class="material-icons">more_vert</i>-->
-                                <!--</span>-->
-              <!--</td>-->
-            <!--</tr>-->
-            <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index] && ($ctrl.showAll || row.finishReason === 'NORMAL')">
-              <td colspan="9">
+            </tr>
+            <tr ng-repeat-end ng-if="$ctrl.expandedRowMap[$index] && ($ctrl.showAll || row.finishReason === 'NORMAL')" class="jsonRow">
+              <td colspan="17">
                 <code>
-                  <pre>{{row | json : spacing}}
+                  <pre>{{$ctrl.originalData[row.datasetKey] | json : spacing}}
                   </pre>
                 </code>
               </td>
             </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="emptyInfo" ng-if="$ctrl.crawls.length > 0">
+          <h3>{{$ctrl.crawls.length}} results in total</h3>
+          <p>If you have filters enabled you might not see anything</p>
         </div>
 
         <div class="emptyInfo" ng-if="$ctrl.crawls.length === 0">

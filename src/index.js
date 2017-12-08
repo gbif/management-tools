@@ -25,11 +25,13 @@ var Nav = require('./app/components/Nav');
 // configurations
 var routesConfig = require('./routes.config');
 var materialConfig = require('./material.config');
+var env = require('./env.constant');
 
 angular
   .module('app', ['ui.router', 'ngMaterial', 'angularMoment', 'ngSanitize', 'chart.js'])
   .config(routesConfig)
   .config(materialConfig)
+  .constant('env', env)
   .component('app', App)
   .component('crawlHistory', CrawlHistory)
   .component('iptSyncState', IptSyncState)

@@ -7,10 +7,11 @@ module.exports = {
 };
 
 /** @ngInject */
-function Overcrawls($http, $log, $stateParams, $state, moment, $q) {
+function Overcrawls($http, $log, $state, moment, $q, env) {
   var vm = this;
   vm.$http = $http;
   vm.$q = $q;
+  vm.env = env;
   vm.moment = moment;
   vm.$state = $state;
   vm.$log = $log;
@@ -56,7 +57,7 @@ function Overcrawls($http, $log, $stateParams, $state, moment, $q) {
 Overcrawls.prototype = {
   getDatasets: function () {
     var vm = this;
-    vm.$http.get('https://crawler.gbif.org/dataset/overcrawled')
+    vm.$http.get(this.env.crawler + '/dataset/overcrawled')
       .then(function (response) {
         vm.datasets = _.values(response.data);
         vm.populateChart();
