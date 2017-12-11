@@ -50,7 +50,6 @@ function syncState($http, $log, $stateParams, $state, moment, $q, env, $localSto
     $http.get(env.iptProxy, {params: {iptBaseURL: url}})
       .then(function (response) {
         addToStorageArray(url);
-        $log.log($localStorage.iptUrls);
         vm.registeredResources = response.data.registeredResources;
         decorate(vm.registeredResources);
       })
