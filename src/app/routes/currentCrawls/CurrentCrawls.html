@@ -79,9 +79,12 @@
                 <md-checkbox ng-model="$ctrl.selected[row.datasetKey]" aria-label="Live view"></md-checkbox>
               </td>
               <td ng-repeat="col in $ctrl.tableColumns">
-                <div ng-if="col.field == '_url'">
-                  <div>{{row[col.field] | simplifyHttpUrls}}</div>
-                  <div style="color:#3f50b5;">{{row._title}}</div>
+                <div ng-if="col.field == '_url'" style="min-width:200px;">
+                  <div class="wordBreak-all">{{row[col.field] | simplifyHttpUrls}}</div>
+                  <div>
+                    <a ng-href="{{$ctrl.env.portal}}/dataset/{{row.datasetKey}}" class="wordBreak-all">{{row._title}}</a>
+                    <div style="display:inline-block; color: grey"> ({{row._indexCount | localNumber }} occ)</div>
+                  </div>
                 </div>
 
                 <div ng-if="col.field != '_url'" class="text-{{row._status[col.field]}}">
@@ -94,7 +97,7 @@
                   <span height="20" class="logImg"/>
                   <md-tooltip md-direction="top">Logs</md-tooltip>
                 </a>
-                <a class="btnLink" ng-href="https://www.gbif.org/dataset/{{row.datasetKey}}">
+                <a class="btnLink" ng-href="{{$ctrl.env.portal}}/dataset/{{row.datasetKey}}">
                   <svg style="height:18px;top: -2px;position: relative;" viewBox="90 239.1 539.7 523.9" xmlns="http://www.w3.org/2000/svg">
                     <path class="gbif-logo-svg" d="M325.5,495.4c0-89.7,43.8-167.4,174.2-167.4C499.6,417.9,440.5,495.4,325.5,495.4"></path>
                     <path class="gbif-logo-svg" d="M534.3,731c24.4,0,43.2-3.5,62.4-10.5c0-71-42.4-121.8-117.2-158.4c-57.2-28.7-127.7-43.6-192.1-43.6

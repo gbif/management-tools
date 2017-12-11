@@ -7,7 +7,7 @@ module.exports = {
 };
 
 /** @ngInject */
-function CrawlHistory($http, $log, $stateParams, $state, moment, $q, env) {
+function CrawlHistory($http, $log, $stateParams, $state, moment, $q, $localStorage, env) {
   var vm = this;
   vm.$http = $http;
   vm.$q = $q;
@@ -17,6 +17,7 @@ function CrawlHistory($http, $log, $stateParams, $state, moment, $q, env) {
   vm.$log = $log;
   vm.currentNavItem = 'tool';
   vm.expandedRowMap = {};
+  vm.$localStorage = $localStorage;
   vm.aboutContent = about;
   vm.limit = 500;
   vm.uuid = $stateParams.uuid;
@@ -44,11 +45,23 @@ CrawlHistory.prototype = {
     this.showAll = state;
     // this.$state.go('.', {showAll: this.showAll}, {inherit: true, notify: false, reload: false});
   },
+  addToStorageArray: function (item) {
+    var prev = _.get(this, '$localStorage.crawlHistoryUUID', []);
+    var history = _.uniqBy(_.concat(prev, item), 'key');
+
+    // remove empty
+    _.remove(history, function (e) {
+      return angular.isUndefined(e.key);
+    });
+    var cappedHistory = _.slice(history.reverse(), 0, 20).reverse();
+    this.$localStorage.crawlHistoryUUID = cappedHistory;
+  },
   getDataset: function () {
     var vm = this;
     vm.$http.get(this.env.dataApi + '/dataset/' + vm.uuid)
       .then(function (response) {
         vm.dataset = response.data;
+        vm.addToStorageArray({key: vm.uuid, title: response.data.title});
       })
       .catch(function () {
       });
@@ -69,7 +82,9 @@ CrawlHistory.prototype = {
     return duration.asHours();
   },
   inputChanged: function (item) {
+    this.$log.log(item);
     if (this.isGuid(item)) {
+      this.uuid = item;
       this.getCrawlData();
     }
   },
@@ -100,5 +115,4 @@ CrawlHistory.prototype = {
     var regexGuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/gi;
     return regexGuid.test(stringToTest);
   }
-}
-;
+};

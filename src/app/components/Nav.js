@@ -6,9 +6,10 @@ module.exports = {
 };
 
 /** @ngInject */
-function Nav($state, $log) {
+function Nav($state, $log, $mdSidenav) {
   this.$state = $state;
   this.$log = $log;
+  this.$mdSidenav = $mdSidenav;
   this.menuOptions = [
     {name: 'Dataset Crawl History', state: 'crawlHistory'},
     {name: 'Overcrawled datasets', state: 'overcrawls'},
@@ -20,5 +21,7 @@ function Nav($state, $log) {
 Nav.prototype = {
   changeState: function (state) {
     this.$state.go(state);
+    this.$mdSidenav('left_nav')
+      .close();
   }
 };

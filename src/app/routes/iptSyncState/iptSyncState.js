@@ -10,54 +10,59 @@ module.exports = {
 };
 
 /** @ngInject */
-function syncState($http, $log, $stateParams, $state, moment, $q, env) {
+function syncState($http, $log, $stateParams, $state, moment, $q, env, $localStorage) {
   var vm = this;
   vm.$http = $http;
   vm.$q = $q;
   vm.moment = moment;
   vm.$state = $state;
+  vm.env = env;
   vm.$log = $log;
   vm.currentNavItem = 'tool';
   vm.expandedRowMap = {};
   vm.aboutContent = about;
   vm.url = $stateParams.url;
-
-  vm.querySearch = function (query) {
-    var deferred = $q.defer();
-    $http.get('https://api.gbif.org/v1/dataset/suggest', {params: {limit: 20, q: query}}).then(function (results) {
-      deferred.resolve(results.data.map(function (e) {
-        return {value: e.key, title: e.title};
-      }));
-    });
-    return deferred.promise;
-  };
-
-  vm.selectedItemChange = function (item) {
-    vm.uuid = item.value;
-    vm.getCrawlData();
-  };
+  vm.$localStorage = $localStorage;
 
   vm.getInventory = function (url) {
-    if (!url) {
+    if (!_.isString(url) || url === '') {
+      vm.registeredResources = undefined;
+      vm.currentUrl = undefined;
+      vm.$state.go('.', {url: url});
       return;
     }
+
+    if (!_.startsWith(url, 'http')) {
+      url = 'http://' + url;
+    }
+
     if (_.endsWith(url, '/inventory/dataset')) {
       url = url.replace(/\/inventory\/dataset$/, '');
     } else {
       url = url.replace(/\/$/g, '');
     }
+    vm.url = url;
+    vm.currentUrl = url;
 
     vm.$state.go('.', {url: url});
-
+    vm.expandedRowMap = {};
+    vm.inventoryFetchFailure = false;
     $http.get(env.iptProxy, {params: {iptBaseURL: url}})
       .then(function (response) {
+        addToStorageArray(url);
+        $log.log($localStorage.iptUrls);
         vm.registeredResources = response.data.registeredResources;
         decorate(vm.registeredResources);
       })
       .catch(function (err) {
         $log.error(err);
+        vm.inventoryFetchFailure = true;
       });
   };
+
+  function addToStorageArray(item) {
+    $localStorage.iptUrls = _.slice(_.uniq($localStorage.iptUrls ? _.concat($localStorage.iptUrls, item) : [item]).reverse(), 0, 20).reverse();
+  }
 
   function decorate(registeredResources) {
     async.eachLimit(registeredResources, 10, function (item, cb) {
@@ -66,8 +71,9 @@ function syncState($http, $log, $stateParams, $state, moment, $q, env) {
       });
       cb();
     }, function (err) {
-      $log.log('err');
-      $log.log(err);
+      if (err) {
+        $log.error(err);
+      }
     });
   }
 

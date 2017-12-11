@@ -13,6 +13,7 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
   vm.tableColumns = [
     {abbr: 'URL', full: 'URL', field: '_url'},
     {abbr: 'DC', full: 'Declared count', field: '_declaredCount'},
+    // {abbr: 'IC', full: 'Count in occurrence index', field: '_indexCount'},
     {abbr: 'PC', full: 'Pages crawled', field: 'pagesCrawled'},
     {abbr: 'PFS', full: 'Pages fragmented successfully', field: 'pagesFragmentedSuccessful'},
     {abbr: 'PFE', full: 'Pages not fragmented (error)', field: 'pagesFragmentedError'},
@@ -43,14 +44,12 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
   vm.$interval = $interval;
   vm.moment = moment;
   vm.$state = $state;
+  vm.env = env;
   vm.$log = $log;
   vm.currentNavItem = 'tool';
   vm.aboutContent = about;
 
   function getCrawling() {
-    if (Object.keys(vm.titles).length > 5000) {
-      vm.titles = {};
-    }
     $http.get(env.crawler + '/dataset/process/running', {params: {_: Date.now()}})
       .then(function (response) {
         vm.originalData = angular.fromJson(angular.toJson(_.keyBy(response.data, 'datasetKey')));
@@ -63,7 +62,6 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
   }
 
   vm.decorations = {};
-  vm.titles = {};
   vm.selected = {};
 
   function decorateCrawl(crawl) {
@@ -87,18 +85,22 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
     crawl._status.declaredCount = crawl.declaredCount === crawl.rawOccurrencesPersistedNew + crawl.rawOccurrencesPersistedUpdated + crawl.rawOccurrencesPersistedUnchanged ? 'green' : 'red';
 
     // get dataset title if not already there
-    if (vm.titles[crawl.datasetKey]) {
-      crawl._title = vm.titles[crawl.datasetKey];
-    } else {
-      $http.get(env.dataApi + '/dataset/' + crawl.datasetKey)
-        .then(function (response) {
-          vm.titles[crawl.datasetKey] = response.data.title;
-          crawl._title = vm.titles[crawl.datasetKey];
-        })
-        .catch(function () {
-          // ignore errors
-        });
-    }
+    $http.get(env.dataApi + '/dataset/' + crawl.datasetKey, {cache: true})
+      .then(function (response) {
+        crawl._title = response.data.title;
+      })
+      .catch(function () {
+        // ignore errors
+      });
+
+    // get occurrence ount from index
+    $http.get(env.dataApi + '/occurrence/search', {cache: true, params: {datasetKey: crawl.datasetKey, limit: 0}})
+      .then(function (response) {
+        crawl._indexCount = response.data.count;
+      })
+      .catch(function () {
+        // ignore errors
+      });
     return crawl;
   }
 

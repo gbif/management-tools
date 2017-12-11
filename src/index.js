@@ -6,6 +6,7 @@ require('angular-material');
 require('angular-moment');
 require('angular-sanitize');
 require('angular-chart.js');
+require('ngstorage');
 
 // css
 require('angular-material/angular-material.css');
@@ -28,7 +29,7 @@ var materialConfig = require('./material.config');
 var env = require('./env.constant');
 
 angular
-  .module('app', ['ui.router', 'ngMaterial', 'angularMoment', 'ngSanitize', 'chart.js'])
+  .module('app', ['ui.router', 'ngMaterial', 'angularMoment', 'ngSanitize', 'chart.js', 'ngStorage'])
   .config(routesConfig)
   .config(materialConfig)
   .constant('env', env)

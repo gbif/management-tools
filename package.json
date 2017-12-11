@@ -37,6 +37,7 @@
     "markdown-loader": "^2.0.1",
     "marked": "^0.3.6",
     "moment": "^2.19.2",
+    "ngstorage": "^0.3.11",
     "webpack": "^2.7.0"
   },
   "devDependencies": {

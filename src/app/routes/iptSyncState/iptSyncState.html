@@ -17,13 +17,24 @@
             <div layout-gt-xs="row" layout-padding ng-if="!$ctrl.rowCollection">
                 <md-input-container class="md-block" flex-gt-xs>
                     <label>Enter a IPT url</label>
-                    <input type="url" ng-model="$ctrl.url" ng-keydown="$ctrl.searchOnEnter($event)">
+                    <input type="text" ng-model="$ctrl.url" ng-keydown="$ctrl.searchOnEnter($event)">
                 </md-input-container>
-                <md-input-container class="md-block">
-                    <md-button ng-click="$ctrl.getInventory($ctrl.url)">Get inventory</md-button>
+                <md-input-container class="md-block" ng-if="$ctrl.url">
+                    <md-button ng-click="$ctrl.getInventory($ctrl.url)" ng-if="$ctrl.url != $ctrl.currentUrl">Get inventory</md-button>
+                    <md-button ng-click="$ctrl.getInventory('')" ng-if="$ctrl.url == $ctrl.currentUrl">Clear</md-button>
                 </md-input-container>
             </div>
 
+            <md-content ng-if="!$ctrl.currentUrl && $ctrl.$localStorage.iptUrls.length > 0" padding class="white">
+                <md-list flex>
+                    <md-subheader class="md-no-sticky">Recently visited</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="item in $ctrl.$localStorage.iptUrls" ng-click="$ctrl.getInventory(item)">
+                        <div class="md-list-item-text" layout="column">
+                            <h3>{{ item }}</h3>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
             <md-content class="md-padding white" ng-if="$ctrl.registeredResources">
                 <md-divider></md-divider>
                 <div class="table-container">
@@ -40,7 +51,7 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat-start="row in $ctrl.registeredResources">
-                            <td><a ng-href="https://gbif-uat.org/dataset/{{row.gbifKey}}">{{row.title}}</a></td>
+                            <td><a ng-href="{{$ctrl.env.portal}}/dataset/{{row.gbifKey}}">{{row.title}}</a></td>
                             <td>{{row.lastPublished | amDateFormat:'YYYY-MM-DD'}}</td>
                             <td><a ng-href="{{row.dwca}}" ng-if="row.dwca">DwCA</a></td>
                             <td class="text-right">{{row.records | localNumber}}</td>
@@ -69,10 +80,12 @@
                         </tbody>
                     </table>
                 </div>
-                <!--<div class="emptyInfo" ng-if="$ctrl.registeredResources.count === 0">-->
-                    <!--<h3>No crawl entries for this data</h3>-->
-                    <!--<p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>-->
-                <!--</div>-->
+            </md-content>
+            <md-content ng-if="$ctrl.inventoryFetchFailure" class="md-padding white">
+                <div class="emptyInfo">
+                    <h3>Failed to get inventory</h3>
+                    <p>This might have failed due to <a href="https://github.com/gbif/ipt/issues/1344">IPT Bug 1344</a>. Please upgrade to the latest IPT to use this functionality.</p>
+                </div>
             </md-content>
         </div>
 
