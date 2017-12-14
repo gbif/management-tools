@@ -8,7 +8,7 @@ module.exports = {
 };
 
 /** @ngInject */
-function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, $interval, env) {
+function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, moment, $q, $interval, env) {
   var vm = this;
   vm.tableColumns = [
     {abbr: 'URL', full: 'URL', field: '_url'},
@@ -60,12 +60,19 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
       })
       .catch(function () {
       })
-      .finally(function(){
+      .finally(function () {
         if (vm.isLive) {
-          vm.liveTimeout = $timeout(getCrawling, 1000);
+          vm.liveTimeout = $timeout(getCrawling, 2000);
         }
       });
   }
+
+  $scope.$on('$destroy', function () {
+    vm.isLive = false;
+    if (angular.isDefined(vm.liveTimeout)) {
+      $timeout.cancel(vm.liveTimeout);
+    }
+  });
 
   vm.decorations = {};
   vm.selected = {};
