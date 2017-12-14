@@ -58,12 +58,16 @@ CrawlHistory.prototype = {
   },
   getDataset: function () {
     var vm = this;
+    vm.errorMessage = undefined;
     vm.$http.get(this.env.dataApi + '/dataset/' + vm.uuid)
       .then(function (response) {
         vm.dataset = response.data;
         vm.addToStorageArray({key: vm.uuid, title: response.data.title});
       })
-      .catch(function () {
+      .catch(function (err) {
+        if (err.status === 404) {
+          vm.errorMessage = 'No such dataset found';
+        }
       });
     vm.$http.get(this.env.dataApi + '/occurrence/search?limit=0&datasetKey=' + vm.uuid)
       .then(function (response) {

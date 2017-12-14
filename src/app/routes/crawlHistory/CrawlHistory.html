@@ -60,6 +60,7 @@
                     <md-card-title-text>
                         <span class="md-headline">{{ $ctrl.dataset.title}}</span>
                         <span class="md-subhead">{{ $ctrl.dataset.key}}</span>
+                        <span class="md-subhead" ng-if="$ctrl.dataset.deleted">This dataset was deleted {{ $ctrl.dataset.deleted | amDateFormat:'YYYY-MM-DD HH:mm'}}</span>
                         <span class="md-subhead">{{ $ctrl.occurrences.count | localNumber }} occurrences in the GBIF index
                             <span ng-if="$ctrl.isOutOfSync($ctrl.occurrences.count)" class="badge-red">
                                 Out of sync
@@ -140,7 +141,10 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0">
+                <div class="emptyInfo" ng-if="$ctrl.errorMessage">
+                    <h3>{{$ctrl.errorMessage}}</h3>
+                </div>
+                <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0 && !$ctrl.errorMessage">
                     <h3>No crawl entries for this data</h3>
                     <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>
                 </div>
