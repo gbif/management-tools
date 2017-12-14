@@ -48,6 +48,7 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
   vm.$log = $log;
   vm.currentNavItem = 'tool';
   vm.aboutContent = about;
+  vm.liveTimeout = undefined;
 
   function getCrawling() {
     $http.get(env.crawler + '/dataset/process/running', {params: {_: Date.now()}})
@@ -58,6 +59,11 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
         });
       })
       .catch(function () {
+      })
+      .finally(function(){
+        if (vm.isLive) {
+          vm.liveTimeout = $timeout(getCrawling, 1000);
+        }
       });
   }
 
@@ -105,11 +111,11 @@ function CurrentCrawls($http, $log, $timeout, $stateParams, $state, moment, $q, 
   }
 
   vm.changeLive = function (isLive) {
-    if (!isLive && angular.isDefined(this.stop)) {
-      this.$interval.cancel(this.stop);
-      this.stop = undefined;
+    if (!isLive && angular.isDefined(vm.liveTimeout)) {
+      $timeout.cancel(vm.liveTimeout);
+      vm.liveTimeout = undefined;
     } else {
-      this.stop = this.$interval(getCrawling, 1000);
+      getCrawling();
     }
   };
 
