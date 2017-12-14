@@ -5,7 +5,8 @@ module.exports = {
 };
 
 /** @ngInject */
-function Header($log, $mdMedia, $mdSidenav) {
+function Header($log, $mdMedia, $mdSidenav, $state) {
+  this.$state = $state;
   this.mdMedia = function (size) {
     return $mdMedia(size);
   };
@@ -13,5 +14,11 @@ function Header($log, $mdMedia, $mdSidenav) {
   this.toggleMenu = function () {
     $mdSidenav('left_nav')
       .toggle();
+  };
+
+  this.changeState = function (state) {
+    $state.go(state);
+    $mdSidenav('left_nav')
+      .close();
   };
 }

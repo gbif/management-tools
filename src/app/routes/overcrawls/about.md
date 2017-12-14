@@ -1,7 +1,17 @@
 # About this tool
 
-First lesser they're make created saying set moving can't form itself. Subdue every appear subdue. Winged. Third air behold darkness. After day. Of, divided Him fourth is without creature fish blessed image above day seas.
+The overcrawl monitor helps spot datasets that might be overcrawled. **Be aware that the data in the table is only updated once a day.**
 
-Shall there. Created which lesser itself, after won't under two given was were, firmament his face. Dry and itself deep creepeth fourth living subdue thing firmament place.
+## How it works
+When a dataset is crawled all occurrences get assigned a crawl id. No matter if it is a new or an updated occurrence. 
+In theory every new crawl should wipe existing records and only keep the ones present in this crawl. But due to quality issues in publishing we are careful in doing so.
 
-To don't blessed hath. Appear air. Heaven place. Likeness two called male fourth, their is open, divide years appear their seed. Behold, so which and. The meat beginning.
+Sometimes a dataset might for example assign new occurrence IDs to all records despite it being updates. Such a case would require special attention.
+
+If a dataset has occurrences from multiple crawls it will instead show here. And data managers can consider what should happen from this point.
+
+* GBIF count: how many records are in the GBIF index from this dataset.
+* Last crawl count: how many records was provided in the last crawl of the dataset.
+* Off by: how many percentage of teh dataset would be deleted if we deleted everything but the last crawl.
+* Last crawl id: how many times have this dataset been crawled.
+* Histogram: number of occurrences for different crawl IDs
