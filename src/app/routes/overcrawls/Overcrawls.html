@@ -16,7 +16,7 @@
             <md-content class="md-padding white">
                 <md-card-title>
                     <md-card-title-text>
-                        <span class="md-subhead">Illustrates datasets with occurrences from multiple crawl attempts.</span>
+                        <span class="md-subhead">Illustrates datasets with occurrences from multiple crawl attempts. Totally off by {{ ($ctrl.totalRecordCount - $ctrl.totalLastCrawlCount) | localNumber }} occurrences in {{$ctrl.totalDataset | localNumber}} datasets.</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>

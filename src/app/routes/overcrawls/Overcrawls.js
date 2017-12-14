@@ -60,6 +60,9 @@ Overcrawls.prototype = {
     vm.$http.get(this.env.crawler + '/dataset/overcrawled')
       .then(function (response) {
         vm.datasets = _.values(response.data);
+        vm.totalRecordCount = _.sumBy(vm.datasets, 'recordCount');
+        vm.totalLastCrawlCount = _.sumBy(vm.datasets, 'lastCrawlCount');
+        vm.totalDataset = vm.datasets.length;
         vm.populateChart();
       })
       .catch(function () {
