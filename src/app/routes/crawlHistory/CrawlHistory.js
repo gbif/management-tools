@@ -99,12 +99,12 @@ CrawlHistory.prototype = {
   isOutOfSync: function (count) {
     var results = _.get(this, 'rowCollection.results', []);
     var first = _.find(results, function (e) {
-      return e.finishReason === 'NORMAL' && _.get(e, 'crawlJob.endpointType') === 'DWC_ARCHIVE';
+      return e.finishReason === 'NORMAL';
     });
     if (!first) {
       return false;
     }
-    return _.get(first, 'fragmentsReceived', -1) !== count;
+    return count / _.get(first, 'fragmentsReceived', count) > 0.1;
   },
   querySearch: function (query) {
     var deferred = this.$q.defer();
