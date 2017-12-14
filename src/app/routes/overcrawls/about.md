@@ -1,14 +1,11 @@
 # About this tool
 
-The overcrawl monitor helps spot datasets that might be overcrawled. **Be aware that the data in the table is only updated once a day.**
+The overcrawl monitor helps spot datasets that might be overcrawled. **Be aware that the data in the table is only updated once a day** and that is **only shows DwC-A dataset crawls** currently.
 
 ## How it works
-When a dataset is crawled all occurrences get assigned a crawl id. No matter if it is a new or an updated occurrence. 
-In theory every new crawl should wipe existing records and only keep the ones present in this crawl. But due to quality issues in publishing we are careful in doing so.
+When a dataset is crawled all occurrence records created, updated or seen to be without change will be updated with the current crawl ID. Once a day a service inspects the index and identifies datasets with records within that dataset with a crawlID differing to the most recent crawl.  Under normal working conditions, all records should have the most recent crawl ID and any remaining should be deleted.  This will happen automatically up to a threshold.  The monitor shows all those remaining that ahve been identified as not meeting the conditions to be deleted automatically and **need administrator attention**.
 
-Sometimes a dataset might for example assign new occurrence IDs to all records despite it being updates. Such a case would require special attention.
-
-If a dataset has occurrences from multiple crawls it will instead show here. And data managers can consider what should happen from this point.
+It should be the case that this console shows no rows of data if all datasets are in sync.  **This is the goal**.
 
 * GBIF count: how many records are in the GBIF index from this dataset.
 * Last crawl count: how many records was provided in the last crawl of the dataset.
