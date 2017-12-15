@@ -105,7 +105,6 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
     return crawl;
   }
 
-  /*eslint-disable */
   function decorateWithDatasetTitle(crawl, cb) {
     // get dataset title if not already there
     $http.get(env.dataApi + '/dataset/' + crawl.datasetKey, {cache: true})
@@ -131,8 +130,6 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
         cb();
       });
   }
-
-  /*eslint-enable */
 
   vm.changeLive = function (isLive) {
     if (!isLive && angular.isDefined(vm.liveTimeout)) {
