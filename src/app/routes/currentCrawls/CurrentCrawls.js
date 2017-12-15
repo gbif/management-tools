@@ -1,6 +1,6 @@
 var about = require('./about.md');
 var _ = require('lodash');
-// var async = require('async');
+var async = require('async');
 
 module.exports = {
   template: require('./CurrentCrawls.html'),
@@ -36,7 +36,7 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
   vm.state = {
     sortReverse: true,
     sortType: 'fragmentsEmitted',
-    pageSize: 100000
+    pageSize: 10
   };
   vm.pageSizes = [{nr: 10, name: 10}, {nr: 25, name: 25}, {nr: 50, name: 50}, {nr: 100000, name: 'all'}];
   vm.$http = $http;
@@ -56,6 +56,12 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
         vm.originalData = angular.fromJson(angular.toJson(_.keyBy(response.data, 'datasetKey')));
         vm.crawls = response.data.map(function (e) {
           return decorateCrawl(e);
+        });
+        async.eachLimit(vm.crawls, 10, decorateWithDatasetTitle, function () {
+          // ignore errors
+        });
+        async.eachLimit(vm.crawls, 10, decorateWithOccurrences, function () {
+          // ignore errors
         });
       })
       .catch(function () {
@@ -96,26 +102,37 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
     crawl._status.interpretedOccurrencesPersistedSuccessful = crawl.verbatimOccurrencesPersistedSuccessful === crawl.interpretedOccurrencesPersistedSuccessful ? 'green' : 'red';
     crawl._status.interpretedOccurrencesPersistedError = crawl.interpretedOccurrencesPersistedError > 0 ? 'red' : 'green';
     crawl._status.declaredCount = crawl.declaredCount === crawl.rawOccurrencesPersistedNew + crawl.rawOccurrencesPersistedUpdated + crawl.rawOccurrencesPersistedUnchanged ? 'green' : 'red';
+    return crawl;
+  }
 
+  /*eslint-disable */
+  function decorateWithDatasetTitle(crawl, cb) {
     // get dataset title if not already there
     $http.get(env.dataApi + '/dataset/' + crawl.datasetKey, {cache: true})
       .then(function (response) {
         crawl._title = response.data.title;
+        cb();
       })
       .catch(function () {
         // ignore errors
+        cb();
       });
+  }
 
+  function decorateWithOccurrences(crawl, cb) {
     // get occurrence ount from index
     $http.get(env.dataApi + '/occurrence/search', {cache: true, params: {datasetKey: crawl.datasetKey, limit: 0}})
       .then(function (response) {
         crawl._indexCount = response.data.count;
+        cb();
       })
       .catch(function () {
         // ignore errors
+        cb();
       });
-    return crawl;
   }
+
+  /*eslint-enable */
 
   vm.changeLive = function (isLive) {
     if (!isLive && angular.isDefined(vm.liveTimeout)) {

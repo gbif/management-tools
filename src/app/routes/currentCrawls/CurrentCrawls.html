@@ -19,7 +19,14 @@
             <label>Search table</label>
             <input ng-model="$ctrl.state.query">
           </md-input-container>
-
+          <md-input-container flex="initial" style="width:200px">
+            <label>How many entries to show</label>
+            <md-select ng-model="$ctrl.state.pageSize">
+              <md-option ng-repeat="pageSize in $ctrl.pageSizes" ng-value="pageSize.nr">
+                {{pageSize.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
           <md-input-container>
             <md-checkbox ng-model="$ctrl.isLive" ng-change="$ctrl.changeLive($ctrl.isLive)" aria-label="Live view">
               Live view
