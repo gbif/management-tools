@@ -15,7 +15,7 @@ These tools target users who are familiar with the GBIF data management processe
 
 ## Running the project
 
-### Requirement Node 6+ && NPM 3+
+### Requirement Node 6.12.2 && NPM 3+
 This generator is targeted to be used with Node >= 6.0.0 and NPM => 3.0.0. You can check your version number with the command
 ```
 node --version && npm --version
