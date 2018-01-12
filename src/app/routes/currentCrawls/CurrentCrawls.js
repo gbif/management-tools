@@ -87,7 +87,10 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
     crawl._url = _.get(crawl, 'crawlJob.targetUrl');
 
     /*eslint-disable */
-    crawl._log = "http://elk.gbif.org:5601/app/kibana#/discover?_a=(filters:!((meta:(alias:!n,disabled:!f,index:'" + env.env + "-crawl-*',key:datasetKey,negate:!f,value:'" + crawl.datasetKey + "'),query:(match:(datasetKey:(query:'" + crawl.datasetKey + "',type:phrase))))),index:'" + env.env + "-crawl-*')&_g=(time:(from:now-7d,mode:quick,to:now))";
+    var index = 'AWBqgxPaf8lu3pmE7fpp';
+    if (env.env == 'uat') index = 'AWDqIcB5f8lu3pmEHgcY';
+    if (env.env == 'prod') index = 'AWDqIeCpf8lu3pmEHglJ';
+    crawl._log = "https://logs.gbif.org/app/kibana#/discover?_g=(time:(from:now-7d,mode:quick,to:now))&_a=(filters:!((meta:(alias:!n,disabled:!f,index:"+index+",key:datasetKey,negate:!f,type:phrase,value:'"+crawl.datasetKey+"'),query:(match:(datasetKey:(query:'"+crawl.datasetKey+"',type:phrase))))),index:"+index+")";
     /*eslint-enable */
 
     // decorate with error messages
