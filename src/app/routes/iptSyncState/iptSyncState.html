@@ -44,8 +44,8 @@
                             <th>Title</th>
                             <th>Last published</th>
                             <th>Source</th>
-                            <th class="text-right">IPT count</th>
-                            <th class="text-right">GBIF count</th>
+                            <th class="text-right" title="Occurrences according to the IPT">IPT count</th>
+                            <th class="text-right" title="Occurrences in the GBIF index">GBIF count</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -54,9 +54,9 @@
                             <td><a ng-href="{{$ctrl.env.portal}}/dataset/{{row.gbifKey}}">{{row.title}}</a></td>
                             <td>{{row.lastPublished | amDateFormat:'YYYY-MM-DD'}}</td>
                             <td><a ng-href="{{row.dwca}}" ng-if="row.dwca">DwCA</a></td>
-                            <td class="text-right">{{row.records | localNumber}}</td>
+                            <td class="text-right">{{row.occurrenceCount | localNumber}}</td>
                             <td class="text-right">
-                                <span ng-class="{'badge-red': row.records !== row._gbifCount, 'badge-green': row.records === row._gbifCount}">{{row._gbifCount | localNumber}}</span>
+                                <span ng-class="{'badge-red': row.occurrenceCount !== row._gbifCount, 'badge-green': row.occurrenceCount === row._gbifCount}">{{row._gbifCount | localNumber}}</span>
                             </td>
                             <td class="text-right">
                                 <span ui-sref="crawlHistory({uuid: row.gbifKey})" class="btnLink">

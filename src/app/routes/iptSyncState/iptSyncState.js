@@ -64,6 +64,9 @@ function syncState($http, $log, $stateParams, $state, moment, $q, env, $localSto
   }
 
   function decorate(registeredResources) {
+    registeredResources.forEach(function (e) {
+      e.occurrenceCount = _.get(e, 'recordsByExtension["http://rs.tdwg.org/dwc/terms/Occurrence"]', 0);
+    });
     async.eachLimit(registeredResources, 10, function (item, cb) {
       $http.get(env.dataApi + '/occurrence/count', {params: {datasetKey: item.gbifKey}}).then(function (results) {
         item._gbifCount = results.data;
