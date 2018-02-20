@@ -11,10 +11,10 @@ function Nav($state, $log, $mdSidenav) {
   this.$log = $log;
   this.$mdSidenav = $mdSidenav;
   this.menuOptions = [
-    {name: 'Dataset Crawl History', state: 'crawlHistory'},
-    {name: 'Overcrawled datasets', state: 'overcrawls'},
+    {name: 'Dataset Ingestion History', state: 'crawlHistory'},
+    {name: 'Overingested datasets', state: 'overcrawls'},
     {name: 'IPT sync state', state: 'iptSyncState'},
-    {name: 'Crawling Monitor', state: 'currentCrawls'}
+    {name: 'Ingestion Monitor', state: 'currentCrawls'}
   ];
 }
 
