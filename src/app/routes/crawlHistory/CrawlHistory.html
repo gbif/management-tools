@@ -5,7 +5,7 @@
                 md-selected-nav-item="$ctrl.currentNavItem"
                 nav-bar-aria-label="navigation links">
             <md-nav-item md-nav-href="#" name="tool">
-                Crawl history
+                Dataset ingestion history
             </md-nav-item>
             <md-nav-item md-nav-href="#" name="about">
                 About
@@ -64,14 +64,14 @@
                         <span class="md-subhead">{{ $ctrl.occurrences.count | localNumber }} occurrences in the GBIF index
                             <span ng-if="$ctrl.isOutOfSync($ctrl.occurrences.count)" class="badge-red">
                                 Out of sync
-                                <md-tooltip md-direction="top">Last NORMAL crawl received count doesn't equal occurrence index count</md-tooltip>
+                                <md-tooltip md-direction="top">Last NORMAL ingestion process received count doesn't equal occurrence index count</md-tooltip>
                             </span>
                         </span>
                     </md-card-title-text>
                 </md-card-title>
                 <div>
                     <span ng-if="$ctrl.rowCollection.count > $ctrl.limit" class="badge-green">
-                        Showing last {{$ctrl.limit}} crawls out of {{$ctrl.rowCollection.count}}
+                        Showing last {{$ctrl.limit}} ingestions out of {{$ctrl.rowCollection.count}}
                     </span>
                 </div>
                 <div layout-wrap layout-gt-sm="row" >
@@ -145,11 +145,11 @@
                     <h3>{{$ctrl.errorMessage}}</h3>
                 </div>
                 <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0 && !$ctrl.errorMessage">
-                    <h3>No crawl entries for this data</h3>
-                    <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6 November 2013</p>
+                    <h3>No ingestion entries for this data</h3>
+                    <p>This can be the case if the dataset hasn't been ingested since logging was introduced 6 November 2013</p>
                 </div>
                 <div class="emptyInfo" ng-if="$ctrl.rowCollection.count > 0 && $ctrl.finishReasonNormalCount == 0 && !$ctrl.showAll">
-                    <h3>No crawl entries finished normally</h3>
+                    <h3>No ingestion entries finished normally</h3>
                     <p>You might want to <a href="" class="btnLink underline" ng-click="$ctrl.updateShowAll(true)">show all</a></p>
                 </div>
 

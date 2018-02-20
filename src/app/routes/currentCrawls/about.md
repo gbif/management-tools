@@ -1,4 +1,3 @@
-# About the crawling monitor
+# About the dataset ingestion monitor
 
-This tool provides an overview of which crawls are currently being processed. Notice that this is intended for tech savy users that understand the GBIF crawling procedures. Not sure what the columns mean? Then be sure to toggle the help.
-
+This tool provides an overview of which datasets are currently being ingested into GBIF's data store. It is primarily intended for technical users that understand the GBIF ingestion procedures.  Toggle the help for an explanation of the column headings.

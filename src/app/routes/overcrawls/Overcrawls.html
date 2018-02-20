@@ -5,7 +5,7 @@
                 md-selected-nav-item="$ctrl.currentNavItem"
                 nav-bar-aria-label="navigation links">
             <md-nav-item md-nav-href="#" name="tool">
-                Overcrawled Datasets
+                Overingested Datasets
             </md-nav-item>
             <md-nav-item md-nav-href="#" name="about">
                 About
@@ -16,7 +16,7 @@
             <md-content class="md-padding white">
                 <md-card-title>
                     <md-card-title-text>
-                        <span class="md-subhead">Illustrates datasets with occurrences from multiple crawl attempts. Totally off by {{ ($ctrl.totalRecordCount - $ctrl.totalLastCrawlCount) | localNumber }} occurrences in {{$ctrl.totalDataset | localNumber}} datasets.</span>
+                        <span class="md-subhead">Illustrates datasets with occurrences from multiple ingestion attempts. Totally off by {{ ($ctrl.totalRecordCount - $ctrl.totalLastCrawlCount) | localNumber }} occurrences in {{$ctrl.totalDataset | localNumber}} datasets.</span>
                     </md-card-title-text>
                 </md-card-title>
                 <md-divider></md-divider>
@@ -55,13 +55,13 @@
                                          title="crawl {{crawl.crawlId}}: {{crawl.count | localNumber}}"></div>
                                 </div>
                                 <div ng-if="dataset.crawlInfo.length >= 100" class="text-right">
-                                    Date from {{dataset.crawlInfo.length}} crawls
+                                    Date from {{dataset.crawlInfo.length}} ingestions
                                 </div>
                             </td>
                             <td class="text-right whiteSpace-nowrap">
                                  <span ui-sref="crawlHistory({uuid: dataset.datasetKey})" class="btnLink">
                                     <i class="material-icons">timeline</i>
-                                     <md-tooltip md-direction="top">Crawl history</md-tooltip>
+                                     <md-tooltip md-direction="top">Ingestion history</md-tooltip>
                                 </span>
                                 <span ng-click="$ctrl.expandedRowMap[$index] = !$ctrl.expandedRowMap[$index]"
                                       class="btnLink">
@@ -83,9 +83,8 @@
                 </div>
 
                 <div class="emptyInfo" ng-if="$ctrl.rowCollection.count === 0">
-                    <h3>No crawl entries for this data</h3>
-                    <p>This can be the case if the dataset hasn't been crawled since crawl logging was introduced 6
-                        November 2013</p>
+                    <h3>No ingestion entries for this data</h3>
+                    <p>This can be the case if the dataset hasn't been ingested since logging was introduced on 6 November 2013</p>
                 </div>
             </md-content>
         </div>
