@@ -97,6 +97,7 @@ CrawlHistory.prototype = {
     this.getCrawlData();
   },
   isOutOfSync: function (count) {
+    console.log(count);
     var results = _.get(this, 'rowCollection.results', []);
     var first = _.find(results, function (e) {
       return e.finishReason === 'NORMAL';
@@ -104,7 +105,8 @@ CrawlHistory.prototype = {
     if (!first) {
       return false;
     }
-    return count / _.get(first, 'fragmentsReceived', count) > 0.1;
+    var offBy = Math.abs((count / _.get(first, 'fragmentsReceived', count)) - 1);
+    return offBy > 0.1;
   },
   querySearch: function (query) {
     var deferred = this.$q.defer();
