@@ -51,7 +51,7 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
   vm.liveTimeout = undefined;
 
   function getCrawling() {
-    $http.get(env.crawler + '/dataset/process/running', {params: {_: Date.now()}})
+    $http.get(env.dataApi + '/dataset/process/running', {params: {_: Date.now()}})
       .then(function (response) {
         vm.originalData = angular.fromJson(angular.toJson(_.keyBy(response.data, 'datasetKey')));
         vm.crawls = response.data.map(function (e) {

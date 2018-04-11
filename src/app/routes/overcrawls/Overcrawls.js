@@ -57,7 +57,7 @@ function Overcrawls($http, $log, $state, moment, $q, env) {
 Overcrawls.prototype = {
   getDatasets: function () {
     var vm = this;
-    vm.$http.get(this.env.crawler + '/dataset/overcrawled')
+    vm.$http.get(this.env.dataApi + '/dataset/overcrawled')
       .then(function (response) {
         vm.datasets = _.values(response.data);
         vm.totalRecordCount = _.sumBy(vm.datasets, 'recordCount');
