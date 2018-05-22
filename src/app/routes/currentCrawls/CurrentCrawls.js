@@ -12,7 +12,7 @@ function CurrentCrawls($http, $log, $timeout, $scope, $stateParams, $state, mome
   var vm = this;
   vm.tableColumns = [
     {abbr: 'URL', full: 'URL', field: '_url'},
-    {abbr: 'DC', full: 'Declared count', field: '_declaredCount'},
+    {abbr: 'DC', full: 'Declared count', field: 'declaredCount'},
     // {abbr: 'IC', full: 'Count in occurrence index', field: '_indexCount'},
     {abbr: 'PC', full: 'Pages crawled', field: 'pagesCrawled'},
     {abbr: 'PFS', full: 'Pages fragmented successfully', field: 'pagesFragmentedSuccessful'},
