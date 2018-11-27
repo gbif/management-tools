@@ -73,11 +73,9 @@ function PipelinesCrawls($http, $log, $timeout) {
     var config = {headers: {'Content-Type': 'application/json', 'kbn-xsrf': 'reporting'}};
     $http.post(url, data, config)
       .then(function (response) {
-        //var metrics = response.data;
-        var metrics = {"took":9,"timed_out":false,"_shards":{"total":10,"successful":10,"skipped":0,"failed":0},"hits":{"total":83,"max_score":0.0,"hits":[]},"aggregations":{"unique_name":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Interpret_metadata_ParMultiDo_Metadata.org.gbif.pipelines.transforms.RecordTransforms.MetadataRecord","doc_count":16,"max_value":{"value":1.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Filter_duplicates_Filtering_duplicates_ParMultiDo_Anonymous.org.gbif.pipelines.transforms.UniqueIdTransform.UniqueRecords","doc_count":13,"max_value":{"value":583964.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Interpret_basic_ParMultiDo_Basic.org.gbif.pipelines.transforms.RecordTransforms.BasicRecord","doc_count":13,"max_value":{"value":583964.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Interpret_multimedia_ParMultiDo_Multimedia.org.gbif.pipelines.transforms.RecordTransforms.MultimediaRecord","doc_count":12,"max_value":{"value":583964.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Interpret_temporal_ParMultiDo_Temporal.org.gbif.pipelines.transforms.RecordTransforms.TemporalRecord","doc_count":12,"max_value":{"value":583964.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Interpret_taxonomy_ParMultiDo_Taxonomy.org.gbif.pipelines.transforms.RecordTransforms.TaxonRecord","doc_count":9,"max_value":{"value":583964.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Interpret_location_ParMultiDo_Location.org.gbif.pipelines.transforms.RecordTransforms.LocationRecord","doc_count":4,"max_value":{"value":583964.0}},{"key":"driver.PipelinesOptionsFactory.Beam.Metrics.Merging_to_json_ParMultiDo_Anonymous.org.gbif.pipelines.core.converters.GbifJsonConverter.JsonConverter","doc_count":4,"max_value":{"value":583964.0}}]}}};
         var array = [];
 
-        for (const bucket of metrics.aggregations.unique_name.buckets) {
+        for (const bucket of response.data.aggregations.unique_name.buckets) {
           var value = {name:"EMPTY", value:0};
           value.name = parseMetricName(bucket.key);
           value.value = bucket.max_value.value;
