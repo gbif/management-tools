@@ -32,5 +32,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('currentCrawls', {
       url: '/crawling-monitor',
       component: 'currentCrawls'
+    })
+    .state('pipelinesCrawls', {
+      url: '/pipelines-crawls',
+      component: 'pipelinesCrawls'
     });
 }

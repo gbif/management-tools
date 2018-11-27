@@ -14,7 +14,8 @@ function Nav($state, $log, $mdSidenav) {
     {name: 'Dataset Ingestion History', state: 'crawlHistory'},
     {name: 'Overingested datasets', state: 'overcrawls'},
     {name: 'IPT sync state', state: 'iptSyncState'},
-    {name: 'Ingestion Monitor', state: 'currentCrawls'}
+    {name: 'Ingestion Monitor', state: 'currentCrawls'},
+    {name: 'Pipelines Ingestion Monitor', state: 'pipelinesCrawls'}
   ];
 }
 
