@@ -13,6 +13,7 @@ function App() {
     {name: 'Dataset Crawl History', state: 'crawlHistory'},
     {name: 'Overcrawled datasets', state: 'overcrawls'},
     {name: 'IPT sync state', state: 'iptSyncState'},
-    {name: 'Crawling Monitor', state: 'currentCrawls'}
+    {name: 'Crawling Monitor', state: 'currentCrawls'},
+    {name: 'Pipelines Monitor', state: 'pipelinesCrawls'}
   ];
 }
