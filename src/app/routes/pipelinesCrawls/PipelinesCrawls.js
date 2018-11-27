@@ -1,4 +1,3 @@
-/*eslint-disable */
 var about = require('./about.md');
 var _ = require('lodash');
 var async = require('async');
@@ -9,7 +8,7 @@ module.exports = {
 };
 
 /** @ngInject */
-function PipelinesCrawls($http, $log, $timeout) {
+function PipelinesCrawls($http, $log, $timeout, env) {
   var vm = this;
   vm.tableColumns = [
     {abbr: 'T', full: 'Title', field: 'title'},
@@ -56,19 +55,20 @@ function PipelinesCrawls($http, $log, $timeout) {
 
   function decorateWithDatasetTitle(crawl, cb) {
   // get dataset title if not already there
-  $http.get(env.dataApi + '/dataset/' + crawl.datasetKey, {cache: true})
-    .then(function (response) {
-      crawl.title = response.data.title;
-    })
-    .catch(function () {
-      // ignore errors
-      cb();
-    });
+    $http.get(env.dataApi + '/dataset/' + crawl.datasetKey, {cache: true})
+      .then(function (response) {
+        crawl.title = response.data.title;
+      })
+      .catch(function () {
+        // ignore errors
+        cb();
+      });
   }
 
-  function decorateWithMetrics(crawl, cb){
+  function decorateWithMetrics(crawl, cb) {
+    var env = 'dev';
     var year = new Date().getFullYear();
-    var url = 'http://logs.gbif.org:5601/elasticsearch/dev-pipeline-metric-' + year + '*/_search';
+    var url = 'http://logs.gbif.org:9200/' + env + '-pipeline-metric-' + year + '*/_search';
     var data = '{"size":0,"aggs":{"unique_name":{"terms":{"field":"name.keyword"},"aggs":{"max_value":{"max":{"field":"value"}}}}},"query":{"bool":{"must":[{"match":{"datasetId":"' + crawl.datasetKey + '"}},{"match":{"attempt":"' + crawl.attempt + '"}},{"match":{"type":"GAUGE"}},{"match_phrase_prefix":{"name":"driver.PipelinesOptionsFactory"}}]}}}';
     var config = {headers: {'Content-Type': 'application/json', 'kbn-xsrf': 'reporting'}};
     $http.post(url, data, config)
@@ -76,7 +76,7 @@ function PipelinesCrawls($http, $log, $timeout) {
         var array = [];
 
         for (const bucket of response.data.aggregations.unique_name.buckets) {
-          var value = {name:"EMPTY", value:0};
+          var value = {name: 'EMPTY', value: 0};
           value.name = parseMetricName(bucket.key);
           value.value = bucket.max_value.value;
           array.push(value);
@@ -89,11 +89,11 @@ function PipelinesCrawls($http, $log, $timeout) {
       });
   }
 
-  function parseMetricName(name){
+  function parseMetricName(name) {
     var start = 0;
-    for (i = name.length; i > 0 ; i--) {
-      if(name[i] == '.'){
-        if(start !== 0){
+    for (var i = name.length; i > 0; i--) {
+      if (name[i] === '.') {
+        if (start !== 0) {
           start = i;
           break;
         }
