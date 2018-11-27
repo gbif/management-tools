@@ -70,7 +70,7 @@ function PipelinesCrawls($http, $log, $timeout, env) {
     var year = new Date().getFullYear();
     var url = 'https://logs.gbif.org/' + env + '-pipeline-metric-' + year + '*/_search';
     var data = '{"size":0,"aggs":{"unique_name":{"terms":{"field":"name.keyword"},"aggs":{"max_value":{"max":{"field":"value"}}}}},"query":{"bool":{"must":[{"match":{"datasetId":"' + crawl.datasetKey + '"}},{"match":{"attempt":"' + crawl.attempt + '"}},{"match":{"type":"GAUGE"}},{"match_phrase_prefix":{"name":"driver.PipelinesOptionsFactory"}}]}}}';
-    var config = {headers: {'Content-Type': 'application/json', 'kbn-xsrf': 'reporting'}};
+    var config = {headers: {'Content-Type': 'application/json'}};
     $http.post(url, data, config)
       .then(function (response) {
         var array = [];
