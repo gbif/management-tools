@@ -75,7 +75,7 @@ function PipelinesCrawls($http, $log, $timeout, env) {
       .then(function (response) {
         var array = [];
 
-        for (const bucket of response.data.aggregations.unique_name.buckets) {
+        for (var bucket of response.data.aggregations.unique_name.buckets) {
           var value = {name: 'EMPTY', value: 0};
           value.name = parseMetricName(bucket.key);
           value.value = bucket.max_value.value;
