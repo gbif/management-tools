@@ -20,7 +20,7 @@ function PipelinesCrawls($http, $log, $timeout, env) {
   vm.aboutContent = about;
 
   function getCrawling() {
-    $http.get(env.dataApi + '/pipelines/process/running')
+    $http.get(env.dataApi + '/pipelines/process/running', {params: {_: Date.now()}})
       .then(function (response) {
         vm.originalData = angular.fromJson(angular.toJson(_.keyBy(response.data, 'crawlId')));
         // Decorate pipeline steps
