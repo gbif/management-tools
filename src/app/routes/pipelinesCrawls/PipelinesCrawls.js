@@ -75,12 +75,13 @@ function PipelinesCrawls($http, $log, $timeout, env) {
       .then(function (response) {
         var array = [];
 
-        for (var bucket of response.data.aggregations.unique_name.buckets) {
+        response.data.aggregations.unique_name.buckets.forEach(function (bucket) {
           var value = {name: 'EMPTY', value: 0};
           value.name = parseMetricName(bucket.key);
           value.value = bucket.max_value.value;
           array.push(value);
-        }
+        });
+
         crawl.metrics = array;
       })
       .catch(function () {
