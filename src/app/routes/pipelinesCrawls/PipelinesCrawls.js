@@ -68,7 +68,7 @@ function PipelinesCrawls($http, $log, $timeout, env) {
   function decorateWithMetrics(crawl, cb) {
     var env = 'dev';
     var year = new Date().getFullYear();
-    var url = 'http://logs.gbif.org:9200/' + env + '-pipeline-metric-' + year + '*/_search';
+    var url = 'https://logs.gbif.org:9200/' + env + '-pipeline-metric-' + year + '*/_search';
     var data = '{"size":0,"aggs":{"unique_name":{"terms":{"field":"name.keyword"},"aggs":{"max_value":{"max":{"field":"value"}}}}},"query":{"bool":{"must":[{"match":{"datasetId":"' + crawl.datasetKey + '"}},{"match":{"attempt":"' + crawl.attempt + '"}},{"match":{"type":"GAUGE"}},{"match_phrase_prefix":{"name":"driver.PipelinesOptionsFactory"}}]}}}';
     var config = {headers: {'Content-Type': 'application/json', 'kbn-xsrf': 'reporting'}};
     $http.post(url, data, config)
