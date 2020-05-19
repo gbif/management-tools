@@ -22,7 +22,7 @@ function Overcrawls($http, $log, $state, moment, $q, env) {
   vm.columns = [
     {field: 'recordCount', title: 'GBIF count'},
     {field: 'lastCrawlCount', title: 'Last crawl count'},
-    {field: 'percentagePreviousCrawls', title: 'Off by %'},
+    {field: 'percentagePreviousCrawls', title: 'Over by %'},
     {field: 'lastCrawlId', title: 'Last crawl id'}
   ];
   vm.state = {
