@@ -1,5 +1,7 @@
-# management-tools
+# GBIF Management Tools
 Tools for data managers of GBIF.org
+
+This project's components were migrated to the GBIF [Registry Console](https://registry.gbif.org/), and the project is no longer maintained.
 
 This project is a collection of utilities for data managers inside and outside of the GBIF Secretariat.  The tools help managers prioritise effort by providing an overview and also triggering actions such as crawling or deletion of overcrawled data.
 
@@ -9,7 +11,7 @@ These tools target users who are familiar with the GBIF data management processe
   2. The summary of over crawled datasets
   3. The IPT synchronisation state for any IPT
   4. The synchronisation state of a Living Atlas when run as a gateway for publishign to GBIF (e.g. Oz, UK)
-  5. The crawl history of a dataset 
+  5. The crawl history of a dataset
   6. The crawl logs (ELK)
 
 
@@ -27,7 +29,7 @@ npm install
 npm run serve
 ```
 
-Other options 
+Other options
 
 * `npm install` to install the dependencies
 * `npm run build` to build an optimized version of your application in /dist
